@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import type { AdoptionApplication } from './adoption-application.entity.js';
 
 @Entity('member')
 export class Member {
@@ -22,10 +21,10 @@ export class Member {
   passwordHash: string;
 
   @Column({ length: 32, nullable: true })
-  phone: string | null;
+  phone?: string;
 
   @Column({ type: 'text', nullable: true })
-  address: string | null;
+  address?: string;
 
   @CreateDateColumn({ name: 'joined_at' })
   joinedAt: Date;

@@ -6,7 +6,6 @@ import {
   ManyToMany,
   JoinTable,
   CreateDateColumn,
-  OneToMany,
   JoinColumn,
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
@@ -26,13 +25,13 @@ export class Pet {
 
   @ManyToOne(() => PetType, (pt) => pt.pets, { nullable: true, eager: false })
   @JoinColumn({ name: 'type_id' })
-  type: PetType | null;
+  type?: PetType;
 
   @Column({ length: 128, nullable: true })
-  breed: string | null;
+  breed?: string;
 
   @Column({ type: 'decimal', precision: 4, scale: 1, nullable: true, name: 'age_years' })
-  ageYears: number | null;
+  ageYears?: number;
 
   @Column({
     type: 'enum',
@@ -42,24 +41,24 @@ export class Pet {
   gender: PetGender;
 
   @Column({ length: 128, nullable: true, name: 'summary_desc' })
-  summaryDesc: string | null;
+  summaryDesc?: string;
 
   @Column({ type: 'text', nullable: true, name: 'full_desc' })
-  fullDesc: string | null;
+  fullDesc?: string;
 
   /**
    * Stored as a JSON string: `{"type":"api"|"external"|"site","uri":"…"}`.
    * Use the `photo` getter/setter for typed access.
    */
   @Column({ type: 'text', nullable: true, name: 'photo_ref' })
-  photoRef: string | null;
+  photoRef?: string;
 
   get photo(): PhotoRef | null {
     return parsePhotoRef(this.photoRef);
   }
 
   set photo(ref: PhotoRef | null) {
-    this.photoRef = ref ? serialisePhotoRef(ref) : null;
+    this.photoRef = ref ? serialisePhotoRef(ref) : undefined;
   }
 
   @Column({ default: true, name: 'is_available' })

@@ -24,17 +24,17 @@ export class ReleasedPet {
 
   @ManyToOne(() => PetType, (pt) => pt.releasedPets, { nullable: true, eager: true })
   @JoinColumn({ name: 'pet_type_id' })
-  petType: PetType | null;
+  petType?: PetType;
 
   @ManyToOne(() => Member, { nullable: false, eager: true })
   @JoinColumn({ name: 'member_id' })
   member: Member;
 
   @Column({ length: 128, nullable: true })
-  breed: string | null;
+  breed?: string;
 
   @Column({ type: 'decimal', precision: 4, scale: 1, nullable: true, name: 'age_years' })
-  ageYears: number | null;
+  ageYears?: number;
 
   @Column({
     type: 'enum',
@@ -44,24 +44,24 @@ export class ReleasedPet {
   gender: PetGender;
 
   @Column({ type: 'text', nullable: true, name: 'photo_ref' })
-  photoRef: string | null;
+  photoRef?: string;
 
   get photo(): PhotoRef | null {
     return parsePhotoRef(this.photoRef);
   }
 
   set photo(ref: PhotoRef | null) {
-    this.photoRef = ref ? serialisePhotoRef(ref) : null;
+    this.photoRef = ref ? serialisePhotoRef(ref) : undefined;
   }
 
   @Column({ length: 128, nullable: true, name: 'summary_desc' })
-  summaryDesc: string | null;
+  summaryDesc?: string;
 
   @Column({ type: 'text', nullable: true, name: 'pet_desc' })
-  petDesc: string | null;
+  petDesc?: string;
 
   @Column({ type: 'text', nullable: true, name: 'reason_desc' })
-  reasonDesc: string | null;
+  reasonDesc?: string;
 
   @Column({
     type: 'enum',
@@ -74,8 +74,8 @@ export class ReleasedPet {
   submittedAt: Date;
 
   @Column({ type: 'datetime', nullable: true, name: 'reviewed_at' })
-  reviewedAt: Date | null;
+  reviewedAt?: Date;
 
   @Column({ type: 'text', nullable: true, name: 'admin_notes' })
-  adminNotes: string | null;
+  adminNotes?: string;
 }
