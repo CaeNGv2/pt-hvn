@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
 import { Tag } from './tag.entity.js';
-import type { AdoptionApplication } from './adoption-application.entity.js';
 import { parsePhotoRef, serialisePhotoRef } from '../shared/photo-ref.js';
 import type { PhotoRef } from '../shared/photo-ref.js';
 
@@ -76,7 +75,4 @@ export class Pet {
     inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
   })
   tags: Tag[];
-
-  @OneToMany('AdoptionApplication', (app: AdoptionApplication) => app.pet)
-  adoptionApplications: AdoptionApplication[];
 }
