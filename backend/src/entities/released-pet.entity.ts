@@ -22,7 +22,7 @@ export class ReleasedPet {
   @Column({ length: 128, name: 'pet_name' })
   petName: string;
 
-  @ManyToOne(() => PetType, (pt) => pt.releasedPets, { nullable: true, eager: true })
+  @ManyToOne(() => PetType, { nullable: true, eager: true })
   @JoinColumn({ name: 'pet_type_id' })
   petType: PetType | null;
 
@@ -30,7 +30,7 @@ export class ReleasedPet {
   @JoinColumn({ name: 'member_id' })
   member: Member;
 
-  @Column({ length: 128, nullable: true })
+  @Column({ type: 'varchar', length: 128, nullable: true })
   breed: string | null;
 
   @Column({ type: 'decimal', precision: 4, scale: 1, nullable: true, name: 'age_years' })
@@ -54,7 +54,7 @@ export class ReleasedPet {
     this.photoRef = ref ? serialisePhotoRef(ref) : null;
   }
 
-  @Column({ length: 128, nullable: true, name: 'summary_desc' })
+  @Column({ type: 'varchar', length: 128, nullable: true, name: 'summary_desc' })
   summaryDesc: string | null;
 
   @Column({ type: 'text', nullable: true, name: 'pet_desc' })

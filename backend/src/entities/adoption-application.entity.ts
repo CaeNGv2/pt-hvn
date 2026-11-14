@@ -24,7 +24,7 @@ export class AdoptionApplication {
   @JoinColumn({ name: 'pet_id' })
   pet: Pet;
 
-  @Column({ length: 256, nullable: true, name: 'living_situation' })
+  @Column({ type: 'varchar', length: 256, nullable: true, name: 'living_situation' })
   livingSituation: string | null;
 
   @Column({ type: 'text', nullable: true, name: 'experience_desc' })

@@ -6,7 +6,6 @@ import {
   ManyToMany,
   JoinTable,
   CreateDateColumn,
-  OneToMany,
   JoinColumn,
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
@@ -24,11 +23,11 @@ export class Pet {
   @Column({ length: 128 })
   name: string;
 
-  @ManyToOne(() => PetType, (pt) => pt.pets, { nullable: true, eager: false })
+  @ManyToOne(() => PetType, { nullable: true, eager: false })
   @JoinColumn({ name: 'type_id' })
   type: PetType | null;
 
-  @Column({ length: 128, nullable: true })
+  @Column({ type: 'varchar', length: 128, nullable: true })
   breed: string | null;
 
   @Column({ type: 'decimal', precision: 4, scale: 1, nullable: true, name: 'age_years' })
@@ -41,7 +40,7 @@ export class Pet {
   })
   gender: PetGender;
 
-  @Column({ length: 128, nullable: true, name: 'summary_desc' })
+  @Column({ type: 'varchar', length: 128, nullable: true, name: 'summary_desc' })
   summaryDesc: string | null;
 
   @Column({ type: 'text', nullable: true, name: 'full_desc' })

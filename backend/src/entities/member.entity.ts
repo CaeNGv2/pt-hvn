@@ -3,9 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import type { AdoptionApplication } from './adoption-application.entity.js';
 
 @Entity('member')
 export class Member {
@@ -21,7 +19,7 @@ export class Member {
   @Column({ length: 256, name: 'password_hash' })
   passwordHash: string;
 
-  @Column({ length: 32, nullable: true })
+  @Column({ type: 'varchar', length: 32, nullable: true })
   phone: string | null;
 
   @Column({ type: 'text', nullable: true })
