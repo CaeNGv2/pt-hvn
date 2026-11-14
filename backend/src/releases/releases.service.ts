@@ -27,11 +27,11 @@ export class ReleasesService {
       breed: dto.breed ?? null,
       ageYears: dto.ageYears ?? null,
       gender: dto.gender ?? 'unknown',
-      photoUrl: dto.photoUrl ?? null,
       summaryDesc: dto.summaryDesc ?? null,
       petDesc: dto.petDesc ?? null,
       reasonDesc: dto.reasonDesc ?? null,
     });
+    release.photo = dto.photo ?? null;
 
     if (dto.petTypeId) {
       const type = await this.typeRepo.findOne({ where: { id: dto.petTypeId } });

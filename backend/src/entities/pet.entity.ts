@@ -11,6 +11,9 @@ import {
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
 import { Tag } from './tag.entity.js';
+import type { AdoptionApplication } from './adoption-application.entity.js';
+import { parsePhotoRef, serialisePhotoRef } from '../shared/photo-ref.js';
+import type { PhotoRef } from '../shared/photo-ref.js';
 
 export type PetGender = 'male' | 'female' | 'unknown';
 
@@ -45,8 +48,20 @@ export class Pet {
   @Column({ type: 'text', nullable: true, name: 'full_desc' })
   fullDesc: string | null;
 
-  @Column({ length: 512, nullable: true, name: 'photo_url' })
-  photoUrl: string | null;
+  /**
+   * Stored as a JSON string: `{"type":"api"|"external"|"site","uri":"…"}`.
+   * Use the `photo` getter/setter for typed access.
+   */
+  @Column({ type: 'text', nullable: true, name: 'photo_ref' })
+  photoRef: string | null;
+
+  get photo(): PhotoRef | null {
+    return parsePhotoRef(this.photoRef);
+  }
+
+  set photo(ref: PhotoRef | null) {
+    this.photoRef = ref ? serialisePhotoRef(ref) : null;
+  }
 
   @Column({ default: true, name: 'is_available' })
   isAvailable: boolean;
@@ -61,4 +76,7 @@ export class Pet {
     inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
   })
   tags: Tag[];
+
+  @OneToMany('AdoptionApplication', (app: AdoptionApplication) => app.pet)
+  adoptionApplications: AdoptionApplication[];
 }

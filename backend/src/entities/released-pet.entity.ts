@@ -8,6 +8,8 @@ import {
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
 import { Member } from './member.entity.js';
+import { parsePhotoRef, serialisePhotoRef } from '../shared/photo-ref.js';
+import type { PhotoRef } from '../shared/photo-ref.js';
 
 export type ReleaseStatus = 'pending' | 'accepted' | 'rejected';
 export type PetGender = 'male' | 'female' | 'unknown';
@@ -41,8 +43,16 @@ export class ReleasedPet {
   })
   gender: PetGender;
 
-  @Column({ length: 512, nullable: true, name: 'photo_url' })
-  photoUrl: string | null;
+  @Column({ type: 'text', nullable: true, name: 'photo_ref' })
+  photoRef: string | null;
+
+  get photo(): PhotoRef | null {
+    return parsePhotoRef(this.photoRef);
+  }
+
+  set photo(ref: PhotoRef | null) {
+    this.photoRef = ref ? serialisePhotoRef(ref) : null;
+  }
 
   @Column({ length: 128, nullable: true, name: 'summary_desc' })
   summaryDesc: string | null;

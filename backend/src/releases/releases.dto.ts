@@ -1,4 +1,5 @@
 import type { PetGender, ReleaseStatus } from '../entities/released-pet.entity.js';
+import type { PhotoRef } from '../shared/photo-ref.js';
 
 /** Submitted by an authenticated member. ownerName/email is derived from their account. */
 export class SubmitReleaseDto {
@@ -7,7 +8,11 @@ export class SubmitReleaseDto {
   breed?: string;
   ageYears?: number;
   gender?: PetGender;
-  photoUrl?: string;
+  /**
+   * Optional photo. Same PhotoRef union as pets:
+   * `{ type: "api"|"external"|"site", uri: "…" }`
+   */
+  photo?: PhotoRef;
   summaryDesc?: string;
   petDesc?: string;
   reasonDesc?: string;

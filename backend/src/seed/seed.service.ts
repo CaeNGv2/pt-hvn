@@ -41,7 +41,7 @@ interface SeedPet {
 }
 
 const SEED_PETS: SeedPet[] = [
-  // ── Dogs ──────────────────────────────────────────────────────────────────
+  // ── Dogs
   {
     name: 'Max', type: 'dog', breed: 'Golden Retriever', ageYears: 3, gender: 'male',
     summaryDesc: 'Friendly golden boy who loves fetch.',
@@ -91,7 +91,7 @@ const SEED_PETS: SeedPet[] = [
     photoUrl: null,
     tags: ['hard to train', 'vaccinated', 'playful'],
   },
-  // ── Cats ──────────────────────────────────────────────────────────────────
+  // ── Cats
   {
     name: 'Whiskers', type: 'cat', breed: 'Domestic Shorthair', ageYears: 4, gender: 'female',
     summaryDesc: 'Independent but affectionate tabby.',
@@ -141,7 +141,7 @@ const SEED_PETS: SeedPet[] = [
     photoUrl: null,
     tags: ['senior', 'neutered/spayed', 'vaccinated', 'easy to handle'],
   },
-  // ── Birds ─────────────────────────────────────────────────────────────────
+  // ── Birds
   {
     name: 'Tweety', type: 'bird', breed: 'Budgerigar', ageYears: 1, gender: 'unknown',
     summaryDesc: 'Cheerful budgie with a bright yellow plumage.',
@@ -170,7 +170,7 @@ const SEED_PETS: SeedPet[] = [
     photoUrl: null,
     tags: ['playful', 'good with other pets'],
   },
-  // ── Rabbits ───────────────────────────────────────────────────────────────
+  // ── Rabbits
   {
     name: 'Thumper', type: 'rabbit', breed: 'Holland Lop', ageYears: 2, gender: 'male',
     summaryDesc: 'Floppy-eared rabbit that is incredibly gentle.',
@@ -221,7 +221,7 @@ const SEED_PETS: SeedPet[] = [
     photoUrl: null,
     tags: ['easy to handle', 'playful'],
   },
-  // ── Additional variety ────────────────────────────────────────────────────
+  // ── Additional variety
   {
     name: 'Pepper', type: 'dog', breed: 'Dalmatian', ageYears: 3, gender: 'female',
     summaryDesc: 'Spotted beauty with boundless energy.',
@@ -275,7 +275,6 @@ const SEED_MEMBERS: SeedMember[] = [
   { fullName: 'Frank Ho', email: 'frank@example.com', password: 'password6', phone: '+65 9123 0006' },
 ];
 
-// ---------------------------------------------------------------------------
 
 @Injectable()
 export class SeedService {
@@ -338,12 +337,12 @@ export class SeedService {
         gender: p.gender,
         summaryDesc: p.summaryDesc,
         fullDesc: p.fullDesc,
-        photoUrl: p.photoUrl,
         isAvailable: true,
         tags: p.tags
           .map((name) => tagMap.get(name))
           .filter((t): t is Tag => t !== undefined),
       });
+      pet.photo = p.photoUrl ? { type: 'external', uri: p.photoUrl } : null;
       await this.petRepo.save(pet);
     }
 
