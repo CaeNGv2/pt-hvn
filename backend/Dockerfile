@@ -21,5 +21,6 @@ WORKDIR /usr/app
 COPY --from=prod-deps /usr/app/node_modules ./node_modules
 COPY --from=builder /usr/app/package.json ./package.json
 COPY --from=builder /usr/app/bun.lock ./bun.lock
+COPY --from=builder /usr/app/dist ./dist
 
 ENTRYPOINT ["bun", "run", "start:prod"]

@@ -1,0 +1,9 @@
+{
+  "name": "@priv/pt-hvn-design-tokens",
+  "type": "module",
+  "private": true,
+
+  "scripts": {
+    "generate": "bun convert.mjs"
+  }
+}

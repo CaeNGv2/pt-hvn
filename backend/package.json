@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@priv/pt-hvn-backend",
   "version": "0.0.1",
   "description": "Pet Heaven Society Backend API",
   "author": "",
@@ -13,7 +13,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "bun dist/main",
     "generate:openapi": "bun ./src/generate-openapi.ts",
     "lint": "oxlint --type-aware src/ test/",
     "test": "vitest run",
