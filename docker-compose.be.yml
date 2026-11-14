@@ -1,7 +1,9 @@
 services:
   mariadb:
     image: mariadb:11
-    restart: on-failure:8
+    networks:
+      backend-network:
+    restart: on-failure:5
     environment:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-rootpassword}
       MARIADB_DATABASE: ${DB_NAME:-pethaven}
@@ -19,7 +21,9 @@ services:
   backend:
     build:
       context: ./backend
-    restart: on-failure:8
+    networks:
+      backend-network:
+    restart: on-failure:5
     depends_on:
       mariadb:
         condition: service_healthy
@@ -39,3 +43,6 @@ services:
 volumes:
   db-data:
   uploads:
+
+networks:
+  backend-network:
