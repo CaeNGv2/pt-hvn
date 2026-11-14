@@ -1,0 +1,108 @@
+name: Build & Deploy to branch "deploy"
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to push to the deploy branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Build Swagger static site
+      # emits a OpenAPI JSON, then swagger-ui-dist renders it as a static site.
+      - name: Install backend dependencies
+        working-directory: backend
+        run: bun install --frozen-lockfile
+
+      - name: Build backend (compile TypeScript)
+        working-directory: backend
+        run: bun run build
+
+      - name: Generate OpenAPI JSON
+        working-directory: backend
+        # Boots NestJS app without a DB connection just to dump the spec.
+        env:
+          NODE_ENV: production
+          JWT_SECRET: ci-secret
+        run: bun src/generate-openapi.js
+
+      - name: Install swagger-ui-dist and generate static Swagger site
+        run: |
+          bun install --no-save swagger-ui-dist
+          mkdir -p api-docs
+          cp -r node_modules/swagger-ui-dist/swagger-ui*.{js,css,js.map} api-docs/ 2>/dev/null || true
+          cp node_modules/swagger-ui-dist/swagger-ui.css api-docs/
+          cp node_modules/swagger-ui-dist/swagger-ui-bundle.js api-docs/
+          cp node_modules/swagger-ui-dist/swagger-ui-standalone-preset.js api-docs/ 2>/dev/null || true
+          cp backend/dist/openapi.json api-docs/openapi.json
+          cat > api-docs/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <title>Pet Heaven API Docs</title>
+            <link rel="stylesheet" href="swagger-ui.css" />
+          </head>
+          <body>
+            <div id="swagger-ui"></div>
+            <script src="swagger-ui-bundle.js"></script>
+            <script src="swagger-ui-standalone-preset.js"></script>
+            <script>
+              SwaggerUIBundle({
+                url: './openapi.json',
+                dom_id: '#swagger-ui',
+                presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+                layout: 'StandaloneLayout'
+              });
+            </script>
+          </body>
+          </html>
+          EOF
+
+      # Build React frontend
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: bun install --frozen-lockfile
+
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          GITHUB_ACTIONS: "true"
+        run: bun run build
+      
+      - name: Copy files for deploy
+        run: |
+          mkdir -p publish/site
+          cp -r frontend/dist/* publish/site
+          cp README.md publish/
+          cp -r api-docs publish/api-docs
+
+      - run: ls -R ./publish
+
+      - name: Deploy to branch "deploy"
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: deploy
+          publish_dir: ./publish
+          force_orphan: true
+          commit_message: "ci: update deploy branch [skip ci]"
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"

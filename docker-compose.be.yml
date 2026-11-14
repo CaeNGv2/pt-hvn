@@ -1,0 +1,44 @@
+services:
+  mariadb:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-rootpassword}
+      MARIADB_DATABASE: ${DB_NAME:-pethaven}
+      MARIADB_USER: ${DB_USER:-pethaven}
+      MARIADB_PASSWORD: ${DB_PASS:-pethaven}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/db-init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: ${PORT:-3000}
+      DB_HOST: ${DB_HOST:-mariadb}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-pethaven}
+      DB_USER: ${DB_USER:-pethaven}
+      DB_PASS: ${DB_PASS:-pethaven}
+      JWT_SECRET: ${JWT_SECRET:-pethaven-dev-secret-change-in-prod}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    volumes:
+      - uploads:/usr/app/data/user-images
+
+volumes:
+  db_data:
+  uploads:

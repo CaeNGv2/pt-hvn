@@ -1,22 +1,25 @@
-FROM oven/bun:1.2-slim AS builder
+# To cache prod deps for runner
+FROM oven/bun:1.4-slim AS prod-deps
+WORKDIR /usr/app
+COPY bun.lock package.json ./
+RUN bun install --frozen-lockfile --production
+
+FROM oven/bun:1.4-slim AS builder
 
 WORKDIR /usr/app
 
-COPY bun.lockb ./
-COPY package.json ./
+COPY bun.lock package.json ./
 RUN bun install --frozen-lockfile
 
 COPY . ./
 RUN bun run build
-RUN bun install --production
 
-FROM oven/bun:1.2-slim AS runner
+FROM oven/bun:1.4-slim AS runner
 ENV NODE_ENV production
 WORKDIR /usr/app
 
+COPY --from=prod-deps /usr/app/node_modules ./node_modules
 COPY --from=builder /usr/app/package.json ./package.json
-COPY --from=builder /usr/app/bun.lockb ./bun.lockb
-COPY --from=builder /usr/app/node_modules ./node_modules
-COPY --from=builder /usr/app/dist ./dist
+COPY --from=builder /usr/app/bun.lock ./bun.lock
 
 ENTRYPOINT ["bun", "run", "start:prod"]
