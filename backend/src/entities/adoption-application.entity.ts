@@ -25,13 +25,13 @@ export class AdoptionApplication {
   pet: Pet;
 
   @Column({ length: 256, nullable: true, name: 'living_situation' })
-  livingSituation?: string;
+  livingSituation: string | null;
 
   @Column({ type: 'text', nullable: true, name: 'experience_desc' })
-  experienceDesc?: string;
+  experienceDesc: string | null;
 
   @Column({ type: 'text', nullable: true })
-  message?: string;
+  message: string | null;
 
   @Column({
     type: 'enum',
@@ -44,8 +44,8 @@ export class AdoptionApplication {
   submittedAt: Date;
 
   @Column({ type: 'datetime', nullable: true, name: 'reviewed_at' })
-  reviewedAt?: Date;
+  reviewedAt: Date | null;
 
   @Column({ type: 'text', nullable: true, name: 'admin_notes' })
-  adminNotes?: string;
+  adminNotes: string | null;
 }
