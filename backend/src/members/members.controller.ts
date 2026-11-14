@@ -38,7 +38,7 @@ export class MembersController {
   @UseGuards(JwtAuthGuard, MemberAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get own member profile' })
-  getMe(@Request() req: AuthRequest) {
+  getMine(@Request() req: AuthRequest) {
     return this.membersService.findOne(req.user.sub);
   }
 

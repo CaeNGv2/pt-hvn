@@ -37,8 +37,8 @@ export class ReleasesController {
     return this.releasesService.submit(req.user.sub, dto);
   }
 
-  /** GET /releases/mine  – authenticated member: own releases */
-  @Get('mine')
+  /** GET /releases/me  – authenticated member: own releases */
+  @Get('me')
   @UseGuards(JwtAuthGuard, MemberAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get own surrender submissions' })

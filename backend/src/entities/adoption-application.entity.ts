@@ -16,11 +16,11 @@ export class AdoptionApplication {
   @PrimaryGeneratedColumn({ unsigned: true })
   id: number;
 
-  @ManyToOne(() => Member, (m) => m.adoptionApplications, { eager: true })
+  @ManyToOne(() => Member, { eager: true })
   @JoinColumn({ name: 'member_id' })
   member: Member;
 
-  @ManyToOne(() => Pet, (p) => p.adoptionApplications, { eager: true })
+  @ManyToOne(() => Pet, { eager: true })
   @JoinColumn({ name: 'pet_id' })
   pet: Pet;
 

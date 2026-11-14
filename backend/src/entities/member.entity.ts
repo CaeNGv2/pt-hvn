@@ -32,7 +32,4 @@ export class Member {
 
   @Column({ default: true, name: 'is_active' })
   isActive: boolean;
-
-  @OneToMany('AdoptionApplication', (app: AdoptionApplication) => app.member)
-  adoptionApplications: AdoptionApplication[];
 }

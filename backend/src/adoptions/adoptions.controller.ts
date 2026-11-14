@@ -37,8 +37,8 @@ export class AdoptionsController {
     return this.adoptionsService.create(req.user.sub, dto);
   }
 
-  /** GET /adoptions/mine  – authenticated member: own applications */
-  @Get('mine')
+  /** GET /adoptions/me  – authenticated member: own applications */
+  @Get('me')
   @UseGuards(JwtAuthGuard, MemberAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get own adoption applications' })

@@ -12,10 +12,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: .
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -41,7 +37,7 @@ jobs:
         env:
           NODE_ENV: production
           JWT_SECRET: ci-secret
-        run: bun src/generate-openapi.js
+        run: bun dist/generate-openapi.js
 
       - name: Install swagger-ui-dist and generate static Swagger site
         run: |
