@@ -1,0 +1,53 @@
+/* ==========================================================================
+   TAILWIND + THEME ENTRY
+   ==========================================================================
+   Imported once from src/main.tsx. Order matters:
+   1. Tailwind core.
+   2. Raw design tokens (CSS custom properties) for dashboard + home.
+   3. @theme block that exposes those tokens to Tailwind's utility engine,
+      so you can write `bg-primary`, `text-default`, `border-outline`, etc.
+   ========================================================================== */
+
+@import "tailwindcss";
+
+@import "./dashboard-tokens.css";
+@import "./home-theme.css";
+
+/* Dark mode is driven by data-theme="dark" (not the OS preference) so the
+   dashboard can offer an explicit toggle. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Map our CSS variables onto Tailwind's design-token namespaces. Because the
+   values reference live custom properties, utilities automatically pick up
+   whichever theme (light / dark / home) is active on an ancestor element. */
+@theme inline {
+  --color-canvas: var(--color-surface-canvas);
+  --color-surface: var(--color-surface);
+  --color-container: var(--color-container);
+  --color-container-highest: var(--color-container-highest);
+  --color-outline: var(--color-outline);
+
+  --color-default: var(--color-text-default);
+  --color-inverse: var(--color-text-inverse);
+
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent-1: var(--color-accent-1);
+}
+
+/* Sensible global defaults. */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface-canvas);
+  color: var(--color-text-default);
+  font-family:
+    system-ui, "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

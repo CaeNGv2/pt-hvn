@@ -80,13 +80,14 @@ jobs:
       - name: Build frontend
         working-directory: frontend
         env:
-          GITHUB_ACTIONS: "true"
+          VITE_API_BASE_URL: "https://pt-hvn-api.uow.itsme.cnz.one"
+          VITE_PAGES_BASE_PATH: "/pt-hvn/website"
         run: bun run build
       
       - name: Copy files for deploy
         run: |
-          mkdir -p publish/site
-          cp -r frontend/dist/* publish/site
+          mkdir -p publish/website
+          cp -r frontend/dist/* publish/website
           cp README.md publish/
           cp -r api-docs publish/api-docs
 

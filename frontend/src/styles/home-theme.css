@@ -1,0 +1,50 @@
+/* ==========================================================================
+   HOME / LANDING DESIGN TOKENS  (proposed)
+   ==========================================================================
+   The public home SPA (landing + CTA) is intentionally light-only — no
+   dark mode. It layers a playful, "jumpy happy" pink palette on top of the
+   standard dashboard tokens so shared components still resolve their base
+   variables, while the landing gets its own expressive accents.
+
+   Opt in by setting `data-theme="home"` on a container (see HomeLayout).
+   These are a PROPOSAL — tweak the hex values freely to taste.
+   ========================================================================== */
+
+[data-theme="home"] {
+  /* --- Inherited base (kept aligned with the light dashboard palette) --- */
+  --color-text-dark: #1f1f1f; /* do not override */
+  --color-text-light: #fafcfe; /* do not override */
+  --color-text-default: #2a1a24; /* warm near-black for friendlier body text */
+  --color-text-inverse: var(--color-text-light);
+
+  --color-surface-canvas: #fffdfe; /* page background, a hair warm/pink */
+  --color-surface: #ffffff;
+  --color-container: #fff0f6; /* soft pink card fill */
+  --color-container-highest: #ffe3ef;
+  --color-outline: #f6c9dd;
+
+  /* --- Playful accents (the "happy pink" layer) --- */
+  --color-primary: #ff4d94; /* hot bubblegum pink — primary CTA */
+  --color-primary-hover: #ff2d80;
+  --color-primary-soft: #ffe0ec; /* tinted backgrounds / chips */
+  --color-on-primary: #ffffff;
+
+  --color-secondary: #7c5cff; /* grape pop for secondary accents */
+  --color-secondary-soft: #ece6ff;
+
+  --color-accent-1: #ffd23f; /* sunny yellow for highlights/confetti */
+  --color-accent-2: #46e5c8; /* mint for fresh, happy contrast */
+  --color-accent-3: #ff8a3d; /* tangerine for energetic flourishes */
+
+  /* --- Expressive extras unique to the landing --- */
+  --home-gradient: linear-gradient(135deg, #ff4d94 0%, #ff8a3d 50%, #ffd23f 100%);
+  --home-gradient-cool: linear-gradient(135deg, #7c5cff 0%, #ff4d94 100%);
+  --home-shadow-pop: 0 12px 30px -8px rgba(255, 77, 148, 0.45);
+
+  /* Rounded, bouncy feel */
+  --home-radius: 1.25rem;
+  --home-radius-pill: 999px;
+
+  color: var(--color-text-default);
+  background: var(--color-surface-canvas);
+}
