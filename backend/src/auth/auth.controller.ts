@@ -1,16 +1,8 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service.js';
+import { AdminLoginDto, MemberLoginDto } from './auth.dto.js';
 
-export class MemberLoginDto {
-  email: string = '';
-  password: string = '';
-}
-
-export class AdminLoginDto {
-  username: string = 'admin';
-  password: string = '';
-}
 
 @ApiTags('auth')
 @Controller('auth')

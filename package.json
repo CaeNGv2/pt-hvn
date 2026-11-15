@@ -10,6 +10,11 @@
 
     "start:be-prod": "docker compose -f docker-compose.yml -f docker-compose.be.prod.yml down && docker compose -f docker-compose.yml -f docker-compose.prod.dev.yml up -d",
     "stop:be-prod": "docker compose -f docker-compose.yml -f docker-compose.be.prod.yml down",
-    "build:be-prod": "docker compose -f docker-compose.yml -f docker-compose.be.prod.yml --progress=plain build"
+    "build:be-prod": "docker compose -f docker-compose.yml -f docker-compose.be.prod.yml --progress=plain build",
+
+    "generate:models": "npx swagger-typescript-api generate -p ./backend/dist/openapi.json -o ./frontend/src/api/generated -n api.ts --extract-enums"
+  },
+  "devDependencies": {
+    "swagger-typescript-api": "^13.14.0"
   }
 }
