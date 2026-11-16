@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type DashboardTheme = "light" | "dark";
 
-const STORAGE_KEY = "site.theme";
+const STORAGE_KEY = "pethvn.site.theme";
 
 /**
  * Dashboard light/dark theme toggle. Writes `data-theme` on <html> so the

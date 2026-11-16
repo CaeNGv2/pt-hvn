@@ -4,7 +4,7 @@ import { Api } from "@/api/generated/api";
 /**
  * Where the JWT is kept between page loads
  */
-const TOKEN_STORAGE_KEY = "site.auth.token";
+const TOKEN_STORAGE_KEY = "pethvn.site.auth_token";
 
 export function getAuthToken(): string | null {
   return localStorage.getItem(TOKEN_STORAGE_KEY);
