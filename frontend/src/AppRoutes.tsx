@@ -2,13 +2,13 @@ import { Route, Routes } from "react-router-dom";
 
 import { DashboardLayout, HomeLayout, type DashboardNavItem } from "@/layouts";
 import AdminHome from "@/pages/admin/AdminHome";
-import DashboardHome from "@/pages/dashboard/DashboardHome";
+import DashboardHome from "@/pages/portal/DashboardHome";
 import LandingPage from "@/pages/home/LandingPage";
 
-const dashboardNav: DashboardNavItem[] = [
-  { label: "Overview", to: "/dashboard" },
-  { label: "My adoptions", to: "/dashboard/adoptions" },
-  { label: "My surrenders", to: "/dashboard/surrenders" },
+const portalNav: DashboardNavItem[] = [
+  { label: "Overview", to: "/portal" },
+  { label: "My adoptions", to: "/portal/adoptions" },
+  { label: "My surrenders", to: "/portal/surrenders" },
 ];
 
 const adminNav: DashboardNavItem[] = [
@@ -36,8 +36,8 @@ export default function AppRoutes() {
         <Route index element={<LandingPage />} />
       </Route>
 
-      {/*  dashboard */}
-      <Route path="dashboard" element={<DashboardLayout title="Pet Dashboard" nav={dashboardNav} />}>
+      {/*  portal */}
+      <Route path="portal" element={<DashboardLayout title="Pet Portal" nav={portalNav} />}>
         <Route index element={<DashboardHome />} />
       </Route>
 

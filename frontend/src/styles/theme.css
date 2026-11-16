@@ -1,17 +1,11 @@
-/* ==========================================================================
-   TAILWIND + THEME ENTRY
-   ==========================================================================
-   Imported once from src/main.tsx. Order matters:
-   1. Tailwind core.
-   2. Raw design tokens (CSS custom properties) for dashboard + home.
-   3. @theme block that exposes those tokens to Tailwind's utility engine,
-      so you can write `bg-primary`, `text-default`, `border-outline`, etc.
-   ========================================================================== */
+/*
+  @theme block that exposes those tokens to Tailwind's utility engine,
+  so you can write `bg-primary`, `text-default`, `border-outline`, etc.
+  */
 
 @import "tailwindcss";
 
-@import "./dashboard-tokens.css";
-@import "./home-theme.css";
+@import "./tokens.css";
 
 /* Dark mode is driven by data-theme="dark" (not the OS preference) so the
    dashboard can offer an explicit toggle. */
@@ -33,21 +27,80 @@
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-accent-1: var(--color-accent-1);
+
+  /* Typography:
+     - standard: Inter for all body/UI text.
+     - display:  Luckiest Guy for headers / big callouts (use `font-display`
+       or the `.text-display` helper). */
+  --font-sans:
+    "Inter", system-ui, "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --font-display: "Luckiest Guy", "Inter", system-ui, sans-serif;
 }
 
-/* Sensible global defaults. */
-html,
-body,
-#root {
-  min-height: 100%;
+/* Brand teal from the logo paw mark — handy as a shared accent. */
+:root {
+  --color-brand-teal: #00b2b5;
+}
+
+/* Display headings. Luckiest Guy is all-caps-ish and heavy, so loosen tracking
+   and lean on line-height for readability. */
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+}
+
+/* --------------------------------------------------------------------------
+   Layout primitives (shared across landing sections)
+   -------------------------------------------------------------------------- */
+
+/* Consistent content column: centered, capped at 1280px, with gutters.
+   Apply to every section's inner wrapper so content stays optically centered.
+   (The hero is the one section allowed to break out full-bleed.) */
+.content-max {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (max-width: 640px) {
+  .content-max {
+    padding-inline: 16px;
+  }
+}
+
+/* The canvas sits behind everything (like the reference). The nav lays
+   directly on it, while the rounded inner surface — which holds the page
+   content — is inset by a small gutter. */
+.page-canvas {
+  background: var(--color-container);
+}
+.page-canvas-surface {
+  margin: 12px;
+  background: var(--color-surface-canvas);
+  border-radius: var(--home-radius, 1rem);
+  overflow: hidden; /* clip the full-bleed hero to the rounded canvas */
+}
+
+@media (max-width: 640px) {
+  .page-canvas-surface {
+    margin: 6px;
+  }
 }
 
 body {
   margin: 0;
   background: var(--color-surface-canvas);
   color: var(--color-text-default);
-  font-family:
-    system-ui, "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scrolling for the landing's in-page nav anchors. */
+html {
+  scroll-behavior: smooth;
 }

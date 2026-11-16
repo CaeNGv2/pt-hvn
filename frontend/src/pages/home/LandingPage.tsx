@@ -1,27 +1,29 @@
-import { Button } from "@/components/ui";
+import {
+  HomeFooter,
+  HomeHero,
+  HowToHelp,
+  Impact,
+  SocialProof,
+  WhoWeAre,
+} from "@/pages/home/sections";
 
 /**
- * Public landing page (home SPA). Placeholder content — the real hero,
- * featured pets, and CTA sections come later.
+ * Public landing page (home SPA).
+ *
+ * The nav lives in HomeLayout (laid on the canvas); this page renders the
+ * content sections and its own footer. Sections live in ./sections.
  */
 export default function LandingPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-20 text-center">
-      <h1 className="text-5xl font-extrabold tracking-tight text-[var(--color-primary)]">
-        Find your new best friend 🐾
-      </h1>
-      <p className="mt-4 text-lg opacity-80">
-        Placeholder landing copy. Adopt, support, or surrender a pet with Pet
-        Heaven Society.
-      </p>
-      <div className="mt-8 flex justify-center gap-3">
-        <Button variant="primary" size="lg">
-          Browse pets
-        </Button>
-        <Button variant="secondary" size="lg">
-          Become a member
-        </Button>
-      </div>
-    </section>
+    <>
+      <main className="flex flex-col gap-16 pb-6">
+        <HomeHero />
+        <WhoWeAre />
+        <HowToHelp />
+        <Impact />
+        <SocialProof />
+      </main>
+      <HomeFooter />
+    </>
   );
 }

@@ -1,17 +1,39 @@
-/* ==========================================================================
-   HOME / LANDING DESIGN TOKENS  (proposed)
-   ==========================================================================
-   The public home SPA (landing + CTA) is intentionally light-only — no
-   dark mode. It layers a playful, "jumpy happy" pink palette on top of the
-   standard dashboard tokens so shared components still resolve their base
-   variables, while the landing gets its own expressive accents.
 
-   Opt in by setting `data-theme="home"` on a container (see HomeLayout).
-   These are a PROPOSAL — tweak the hex values freely to taste.
-   ========================================================================== */
+:root,
+[data-theme="light"] {
+  --color-surface-inverse: var(--color-text-dark);
+  --color-container-lowest: var(--color-surface);
+  --color-surface-inverse-lower: #4f4f4f;
+  --color-container-highest: #f4f4f4;
+  --color-secondary: #12415b;
+  --color-text-dark: #1f1f1f; /* do not override */
+  --color-accent-1: #93c56b; /* not to override */
+  --color-outline: #d9d9d9;
+  --color-text-light: #fafcfe; /* do not override */
+  --color-surface: #fbfbfb;
+  --color-text-inverse: var(--color-text-light);
+  --color-primary: #699446;
+  --color-text-default: var(--color-text-dark);
+  --color-surface-canvas: #ffffff;
+  --color-container: #f1f1f1;
+}
+
+[data-theme="dark"] {
+  --color-surface-inverse: var(--color-text-light);
+  --color-surface-inverse-lower: #d9dee3;
+  --color-container-highest: #37434f;
+  --color-secondary: #53dfee;
+  --color-outline: #8e8e8e;
+  --color-surface: #2d3842;
+  --color-text-inverse: var(--color-text-dark);
+  --color-primary: #93c56b;
+  --color-text-default: var(--color-text-light);
+  --color-surface-canvas: #263239;
+  --color-container: #323e49;
+}
+
 
 [data-theme="home"] {
-  /* --- Inherited base (kept aligned with the light dashboard palette) --- */
   --color-text-dark: #1f1f1f; /* do not override */
   --color-text-light: #fafcfe; /* do not override */
   --color-text-default: #2a1a24; /* warm near-black for friendlier body text */
@@ -36,15 +58,23 @@
   --color-accent-2: #46e5c8; /* mint for fresh, happy contrast */
   --color-accent-3: #ff8a3d; /* tangerine for energetic flourishes */
 
+  /* Brand teal (logo paw) — a cool counterpoint to the pinks. */
+  --color-brand-teal: #00b2b5;
+
   /* --- Expressive extras unique to the landing --- */
   --home-gradient: linear-gradient(135deg, #ff4d94 0%, #ff8a3d 50%, #ffd23f 100%);
   --home-gradient-cool: linear-gradient(135deg, #7c5cff 0%, #ff4d94 100%);
   --home-shadow-pop: 0 12px 30px -8px rgba(255, 77, 148, 0.45);
 
+  /* Hero: a darker rectangle behind the (transparent) dog, split on a slant so
+     one half is deep and the other lighter. Heading text on top is light. */
+  --home-hero-dark: #3a1030; /* deep plum/berry */
+  --home-hero-dark-2: #5c1848; /* lighter half of the split */
+
   /* Rounded, bouncy feel */
   --home-radius: 1.25rem;
-  --home-radius-pill: 999px;
 
   color: var(--color-text-default);
   background: var(--color-surface-canvas);
 }
+
