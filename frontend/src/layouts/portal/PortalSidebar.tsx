@@ -88,6 +88,7 @@ export function PortalSidebar({ nav, onNavigate }: PortalSidebarProps) {
                     <NavLink
                       to={item.to}
                       onClick={onNavigate}
+                      end
                       className={({ isActive }) =>
                         cn(
                           linkBase,
@@ -134,6 +135,7 @@ export function PortalSidebar({ nav, onNavigate }: PortalSidebarProps) {
                       <NavLink
                         to={item.to}
                         onClick={onNavigate}
+                        end
                         className={({ isActive }) =>
                           cn(
                             linkBase,
