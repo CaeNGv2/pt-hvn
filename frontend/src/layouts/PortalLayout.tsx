@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useMemo, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { Breadcrumbs } from "./portal/Breadcrumbs";
 import {
@@ -19,30 +20,61 @@ interface PortalLayoutProps {
   nav?: SidebarNav;
 }
 
-/**
- * Portal shell: a fixed sidebar + a content area whose sticky header shows the
- * current page title with a breadcrumb trail beneath it.
- *
- * `nav` lets different areas (member portal, admin) reuse this shell with their
- * own sidebar content. Pages declare their title/breadcrumbs via
- * `usePortalHeader(...)`.
- */
+// The sidebar is static on md+ and collapses into a hamburger-triggered overlay
+// drawer below md
 export default function PortalLayout({ nav = portalSidebarNav }: PortalLayoutProps) {
   const [header, setHeader] = useState<PortalHeader>(DEFAULT_HEADER);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const ctx = useMemo(() => ({ header, setHeader }), [header]);
+  const location = useLocation();
+
+  // Close the mobile drawer whenever the route changes.
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   return (
     <PortalHeaderContext value={ctx}>
       <div className="flex min-h-svh bg-[var(--color-surface-canvas)] text-[var(--color-text-default)]">
-        <div className="sticky top-0 h-svh shrink-0">
+        {/* Desktop sidebar */}
+        <div className="sticky top-0 hidden h-svh shrink-0 md:block">
           <PortalSidebar nav={nav} />
         </div>
 
+        {/* Mobile drawer + backdrop */}
+        {mobileOpen && (
+          <div className="fixed inset-0 z-40 md:hidden">
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
+              className="absolute inset-0 bg-black/40"
+            />
+            <div className="absolute inset-y-0 left-0 shadow-xl">
+              <PortalSidebar nav={nav} onNavigate={() => setMobileOpen(false)} />
+            </div>
+          </div>
+        )}
+
         <div className="flex min-w-0 flex-1 flex-col">
-          {/* Sticky header: page title + breadcrumb. */}
+          {/* Sticky header: hamburger (mobile) + page title + breadcrumb. */}
           <header className="sticky top-0 z-20 border-b border-[var(--color-outline)] bg-[var(--color-surface-canvas)]/90 px-6 py-3 backdrop-blur">
-            <h1 className="text-lg font-semibold">{header.title}</h1>
-            <div className="mt-1">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                aria-label="Open menu"
+                onClick={() => setMobileOpen(true)}
+                className="-ml-1 rounded-md p-1 text-[var(--color-text-default)] hover:bg-[var(--color-container)] md:hidden"
+              >
+                {mobileOpen ? (
+                  <XMarkIcon className="h-6 w-6" />
+                ) : (
+                  <Bars3Icon className="h-6 w-6" />
+                )}
+              </button>
+              <h1 className="text-display text-xl font-semibold">{header.title}</h1>
+            </div>
+            <div className="mt-2">
               <Breadcrumbs items={header.breadcrumbs} />
             </div>
           </header>

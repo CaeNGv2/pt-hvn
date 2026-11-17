@@ -12,6 +12,8 @@ const linkBase = "flex items-center gap-3 rounded-md px-3 py-2 text-sm transitio
 interface PortalSidebarProps {
   /** Navigation config for this area (member portal, admin, …). */
   nav: SidebarNav;
+  /** Called when a nav link is activated (used to close the mobile drawer). */
+  onNavigate?: () => void;
 }
 
 /**
@@ -21,7 +23,7 @@ interface PortalSidebarProps {
  * Navigation content comes from `nav`, so the member portal and admin render
  * different items from the same component.
  */
-export function PortalSidebar({ nav }: PortalSidebarProps) {
+export function PortalSidebar({ nav, onNavigate }: PortalSidebarProps) {
   // Shared theme context — the logo ink reacts when the theme cycles.
   const { theme } = useTheme();
   const { dashboardLink, categories } = nav;
@@ -30,7 +32,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
     <aside className="flex h-svh w-64 flex-col border-r border-[var(--color-outline)] bg-[var(--color-surface)]">
       {/* Logo */}
       <div className="flex h-14 shrink-0 items-center px-4">
-        <Link to={dashboardLink.to} aria-label="Pet Heaven portal">
+        <Link to={dashboardLink.to} aria-label="Pet Heaven portal" onClick={onNavigate}>
           <Logo onSurfaceType={theme === "dark" ? "dark" : "light"} />
         </Link>
       </div>
@@ -40,6 +42,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
         <NavLink
           to={dashboardLink.to}
           end
+          onClick={onNavigate}
           className={({ isActive }) =>
             cn(
               linkBase,
@@ -54,6 +57,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
         </NavLink>
         <Link
           to="/"
+          onClick={onNavigate}
           className={cn(
             linkBase,
             "text-[var(--color-text-default)]/80 hover:bg-[var(--color-container)]"
@@ -83,6 +87,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
                   ) : (
                     <NavLink
                       to={item.to}
+                      onClick={onNavigate}
                       className={({ isActive }) =>
                         cn(
                           linkBase,
@@ -128,6 +133,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
                     ) : (
                       <NavLink
                         to={item.to}
+                        onClick={onNavigate}
                         className={({ isActive }) =>
                           cn(
                             linkBase,
