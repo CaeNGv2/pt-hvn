@@ -24,7 +24,7 @@ export function PetCardView({ data }: { data: PetCardViewData }) {
   ].filter(Boolean) as string[];
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)]">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)] h-stretch">
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--color-container)]">
         {data.photoUrl ? (
           <img

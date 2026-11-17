@@ -91,3 +91,11 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@utility h-stretch {
+  /* legacy firefxo */
+  height: -moz-available;
+  /* legacy saafari  / pre v138 chromium */
+  height: -webkit-fill-available;
+  height: stretch;
+}

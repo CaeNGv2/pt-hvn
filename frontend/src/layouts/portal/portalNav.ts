@@ -1,4 +1,5 @@
 import {
+  ArrowLeftIcon,
   ArrowPathIcon,
   ClipboardDocumentListIcon,
   HeartIcon,
@@ -23,7 +24,7 @@ export interface NavLinkItem {
 }
 
 export interface NavCategory {
-  heading: string;
+  heading: string | "main";
   items: NavLinkItem[];
 }
 
@@ -95,6 +96,16 @@ export const adminSidebarNav: SidebarNav = {
   scope: "admin",
   dashboardLink: { label: "Overview", to: "/admin", icon: Squares2X2Icon },
   categories: [
+    {
+      heading: "main", // add to top main cat
+      items: [
+        {
+          label: "Pet Portal",
+          to: "/portal",
+          icon: ArrowLeftIcon,
+        },
+      ],
+    },
     {
       heading: "Manage",
       items: [

@@ -5,11 +5,11 @@ import { resolvePhotoUrl } from "@/lib/photo";
 import { PetCardView } from "./PetCardView";
 
 /** Compact pet summary card; links to the pet detail page. */
-export function PetCard({ pet }: { pet: Pet }) {
+export function PetCard({ pet, className }: { pet: Pet, className?: string }) {
   return (
     <Link
       to={`/portal/pets/${pet.id}`}
-      className="group block transition-shadow hover:shadow-md"
+      className={`group block transition-shadow hover:shadow-md ${className}`}
     >
       <PetCardView
         data={{

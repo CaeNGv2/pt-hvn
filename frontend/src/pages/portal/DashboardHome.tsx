@@ -1,4 +1,4 @@
-import { HeartIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, MagnifyingGlassIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 
 import { buttonClasses } from "@/components/ui";
@@ -31,22 +31,35 @@ export default function DashboardHome() {
           </div>
         </Link>
 
-        <div className="flex items-start gap-3 rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)] p-5 opacity-60">
+      
+        <Link
+          to="/portal/adoptions" className="flex items-start gap-3 rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)] p-5 transition-shadow hover:shadow-md">
           <HeartIcon className="h-6 w-6 shrink-0 text-[var(--color-primary)]" />
           <div>
             <h3 className="font-semibold">My applications</h3>
             <p className="mt-1 text-sm text-[var(--color-text-default)]/60">
-              Coming soon.
+              View the status of your adoption applications.
             </p>
           </div>
-        </div>
+        </Link>
+
+        <Link
+          to="/portal/releases/new" className="flex items-start gap-3 rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)] p-5 transition-shadow hover:shadow-md">
+          <PaperAirplaneIcon className="h-6 w-6 shrink-0 text-[var(--color-primary)]" />
+          <div>
+            <h3 className="font-semibold">Surrender a pet</h3>
+            <p className="mt-1 text-sm text-[var(--color-text-default)]/60">
+              Give the pet a better life. Humanely.
+            </p>
+          </div>
+        </Link>
       </div>
 
-      <div>
+      {/* <div>
         <Link to="/portal/pets" className={buttonClasses("primary", "standard")}>
           Start browsing
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

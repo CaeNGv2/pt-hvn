@@ -72,7 +72,7 @@ export default function PetListPage() {
       {!loading && pets.length > 0 && (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {pets.map((pet) => (
-            <PetCard key={pet.id} pet={pet} />
+            <PetCard key={pet.id} pet={pet} className="transition-transform duration-200 hover:-translate-y-1"/>
           ))}
         </div>
       )}

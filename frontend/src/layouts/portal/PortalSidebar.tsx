@@ -7,8 +7,7 @@ import { cn } from "@/lib/cn";
 import type { SidebarNav } from "./portalNav";
 import { ProfileFooter } from "./ProfileFooter";
 
-const linkBase =
-  "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors";
+const linkBase = "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors";
 
 interface PortalSidebarProps {
   /** Navigation config for this area (member portal, admin, …). */
@@ -63,16 +62,11 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
           <ArrowLeftIcon className="h-5 w-5 shrink-0" />
           Society home page
         </Link>
-      </div>
 
-      {/* Scrollable categorised items */}
-      <nav className="flex-1 overflow-y-auto px-3 py-2">
-        {categories.map((category) => (
-          <div key={category.heading} className="mb-4">
-            <p className="px-3 pb-1 text-xs font-semibold tracking-wide text-[var(--color-text-default)]/40 uppercase">
-              {category.heading}
-            </p>
-            <ul className="flex flex-col gap-0.5">
+        {categories
+          .filter((category) => category.heading === "main")
+          .map((category) => (
+            <>
               {category.items.map((item) => (
                 <li key={item.to}>
                   {item.disabled ? (
@@ -104,9 +98,54 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
                   )}
                 </li>
               ))}
-            </ul>
-          </div>
-        ))}
+            </>
+          ))}
+      </div>
+
+      {/* Scrollable categorised items */}
+      <nav className="flex-1 overflow-y-auto px-3 py-2">
+        {categories
+          .filter((category) => category.heading !== "main")
+          .map((category) => (
+            <div key={category.heading} className="mb-4">
+              <p className="px-3 pb-1 text-xs font-semibold tracking-wide text-[var(--color-text-default)]/40 uppercase">
+                {category.heading}
+              </p>
+              <ul className="flex flex-col gap-0.5">
+                {category.items.map((item) => (
+                  <li key={item.to}>
+                    {item.disabled ? (
+                      <span
+                        className={cn(
+                          linkBase,
+                          "cursor-not-allowed text-[var(--color-text-default)]/35"
+                        )}
+                        title="Coming soon"
+                      >
+                        <item.icon className="h-5 w-5 shrink-0" />
+                        {item.label}
+                      </span>
+                    ) : (
+                      <NavLink
+                        to={item.to}
+                        className={({ isActive }) =>
+                          cn(
+                            linkBase,
+                            isActive
+                              ? "bg-[var(--color-container-highest)] font-medium text-[var(--color-primary)]"
+                              : "text-[var(--color-text-default)]/80 hover:bg-[var(--color-container)]"
+                          )
+                        }
+                      >
+                        <item.icon className="h-5 w-5 shrink-0" />
+                        {item.label}
+                      </NavLink>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </nav>
 
       {/* Profile + theme toggle */}
