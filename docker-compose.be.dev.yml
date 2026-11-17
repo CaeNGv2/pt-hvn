@@ -11,3 +11,7 @@ services:
       DB_USER: ${DB_USER:-pethaven}
       DB_PASS: ${DB_PASS:-pethaven}
       JWT_SECRET: ${JWT_SECRET:-pethaven-dev-secret-change-in-prod}
+  
+  phpmyadmin:
+    ports:
+      - 3663:80

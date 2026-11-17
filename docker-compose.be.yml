@@ -40,6 +40,15 @@ services:
     volumes:
       - uploads:/usr/app/data/user-images
 
+  phpmyadmin:
+    image: phpmyadmin:5
+    networks:
+      backend-network:
+    restart: on-failure:5
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+
 volumes:
   db-data:
   uploads:
