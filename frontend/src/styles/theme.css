@@ -28,10 +28,7 @@
   --color-secondary: var(--color-secondary);
   --color-accent-1: var(--color-accent-1);
 
-  /* Typography:
-     - standard: Inter for all body/UI text.
-     - display:  Luckiest Guy for headers / big callouts (use `font-display`
-       or the `.text-display` helper). */
+  /* Typography: */
   --font-sans:
     "Inter", system-ui, "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont,
     sans-serif;
@@ -52,13 +49,7 @@
   line-height: 1.05;
 }
 
-/* --------------------------------------------------------------------------
-   Layout primitives (shared across landing sections)
-   -------------------------------------------------------------------------- */
 
-/* Consistent content column: centered, capped at 1280px, with gutters.
-   Apply to every section's inner wrapper so content stays optically centered.
-   (The hero is the one section allowed to break out full-bleed.) */
 .content-max {
   width: 100%;
   max-width: 1280px;
@@ -72,16 +63,12 @@
   }
 }
 
-/* The canvas sits behind everything (like the reference). The nav lays
-   directly on it, while the rounded inner surface — which holds the page
-   content — is inset by a small gutter. */
 .page-canvas {
   background: var(--color-container);
 }
 .page-canvas-surface {
-  margin: 12px;
+  margin: 0px 10px;
   background: var(--color-surface-canvas);
-  border-radius: var(--home-radius, 1rem);
   overflow: hidden; /* clip the full-bleed hero to the rounded canvas */
 }
 

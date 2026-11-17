@@ -3,5 +3,5 @@ export { Modal } from "./Modal";
 export {
   buttonClasses,
   type ButtonVariant,
-  type ButtonSize,
+  type ButtonShape,
 } from "./buttonStyles";

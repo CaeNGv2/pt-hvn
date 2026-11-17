@@ -1,4 +1,4 @@
-//Centralised compile time env management
+//Centralised compile time env management (warning do not import to outside of src world)
 
 
 function requiredOrDefault(name: keyof ImportMetaEnv, fallback?: string): string {
@@ -18,7 +18,7 @@ function sanitiseBaseUri(value: string) {
 
 export const env = {
   /** Base URL of the backend REST API (no trailing slash). */
-  apiBaseUrl: sanitiseBaseUri(requiredOrDefault("VITE_API_BASE_URL", "http://localhost:3000")),
+  apiBaseUrl: sanitiseBaseUri(requiredOrDefault("VITE_API_BASE_URL", "https://pt-hvn-api.uow.itsme.cnz.one")),
   pagesBasePath: requiredOrDefault("VITE_PAGES_BASE_PATH", "/"), // `/pt-hvn/website` for GHA
   /** True when running `vite` in dev mode. */
   isDev: import.meta.env.DEV,

@@ -57,7 +57,7 @@ export function SocialProof() {
         {reviews.map((review) => (
           <figure
             key={review.author}
-            className="flex flex-col gap-4 rounded-[var(--home-radius)] border border-[var(--color-outline)] bg-[var(--color-surface)] p-6"
+            className="flex flex-col gap-4 rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)] p-6"
           >
             <Stars rating={review.rating} />
             <blockquote className="text-sm leading-relaxed text-[var(--color-text-default)]/80">

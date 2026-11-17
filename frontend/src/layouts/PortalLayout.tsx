@@ -17,17 +17,7 @@ interface DashboardLayoutProps {
   actions?: ReactNode;
 }
 
-/**
- * Shared shell for BOTH the member dashboard and the admin dashboard.
- *
- * It owns the minimalist chrome (sidebar + top bar) and the light/dark toggle;
- * the specific dashboards just pass their own `title` and `nav` items and
- * render their pages through the nested <Outlet />.
- *
- * Usage (see routes.tsx):
- *   <DashboardLayout title="Admin" nav={adminNav} />
- */
-export default function DashboardLayout({
+export default function PortalLayout({
   title = "Dashboard",
   nav = [],
   actions,

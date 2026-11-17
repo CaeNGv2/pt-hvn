@@ -2,13 +2,13 @@ import type { ButtonHTMLAttributes } from "react";
 
 import {
   buttonClasses,
-  type ButtonSize,
+  type ButtonShape,
   type ButtonVariant,
 } from "@/components/ui/buttonStyles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  size?: ButtonSize;
+  shape?: ButtonShape;
 }
 
 /**
@@ -19,13 +19,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * an <a>/<Link> instead of this component.
  *
  * Usage:
- *   <Button variant="primary" size="md" onClick={...}>Adopt me</Button>
+ *   <Button variant="primary" shape="standard" onClick={...}>Save</Button>
  */
 export function Button({
   variant = "primary",
-  size = "md",
+  shape = "standard",
   className,
   ...props
 }: ButtonProps) {
-  return <button className={buttonClasses(variant, size, className)} {...props} />;
+  return (
+    <button className={buttonClasses(variant, shape, className)} {...props} />
+  );
 }

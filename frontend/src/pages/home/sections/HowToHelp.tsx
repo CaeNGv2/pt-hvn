@@ -51,7 +51,7 @@ export function HowToHelp() {
         {cards.map(({ icon: Icon, title, desc, cta, to }) => (
           <article
             key={title}
-            className="flex flex-col items-start gap-4 rounded-[var(--home-radius)] border border-[var(--color-outline)] bg-[var(--color-surface)] p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[var(--home-shadow-pop)]"
+            className="flex flex-col items-start gap-4 rounded-lg border border-[var(--color-outline)] bg-[var(--color-surface)] p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-[var(--home-shadow-pop)]"
           >
             <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
               <Icon className="h-6 w-6" />

@@ -14,7 +14,7 @@ export function Impact() {
   return (
     <section id="impact" className="content-max py-4">
       <div
-        className="rounded-[var(--home-radius)] px-6 py-12 text-center text-[var(--color-text-light)]"
+        className="rounded-lg px-6 py-12 text-center text-[var(--color-text-light)]"
         style={{ background: "var(--home-gradient)" }}
       >
         <h2 className="text-display text-3xl sm:text-4xl">Our impact</h2>

@@ -46,7 +46,7 @@ export function HomeFooter() {
     <footer className="mt-4 bg-[var(--color-container)]">
       <div className="content-max grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-3">
-          <Logo on="light" />
+          <Logo onSurfaceType="light" />
           <p className="max-w-xs text-sm text-[var(--color-text-default)]/70">
             A community society rehoming rescued pets with love since
             2022.

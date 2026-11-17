@@ -48,7 +48,7 @@ export function HomeNav() {
                 aria-label="Pet Heaven home"
                 className="hidden shrink-0 md:block"
               >
-                <Logo on="light" />
+                <Logo onSurfaceType="light" />
               </Link>
             </div>
 
@@ -58,14 +58,18 @@ export function HomeNav() {
               aria-label="Pet Heaven home"
               className="flex shrink-0 justify-center md:hidden"
             >
-              <Logo on="light" />
+              <Logo onSurfaceType="light" />
             </Link>
-            <ul className="hidden items-center gap-6 text-sm font-medium md:flex">
+            <ul className="hidden items-center gap-1 md:flex">
               {sectionLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-[var(--color-text-default)]/80 transition-colors hover:text-[var(--color-primary)]"
+                    className={buttonClasses(
+                      "raw",
+                      "standard",
+                      "text-[var(--color-text-default)]/80 hover:text-[var(--color-primary)]"
+                    )}
                   >
                     {link.label}
                   </a>
@@ -77,9 +81,13 @@ export function HomeNav() {
             <div className="flex flex-1 items-center justify-end gap-3 md:flex-none">
               <Link
                 to="/portal"
-                className={buttonClasses("primary", "md", "hidden md:inline-flex")}
+                className={buttonClasses(
+                  "primary",
+                  "standard",
+                  "hidden md:inline-flex"
+                )}
               >
-                Adopt
+                Adopt Now
               </Link>
               <Link
                 to="/portal/login"
@@ -93,13 +101,17 @@ export function HomeNav() {
 
           {/* Mobile collapsible panel. */}
           <DisclosurePanel className="border-t border-[var(--color-outline)] md:hidden">
-            <ul className="content-max flex flex-col gap-1 py-3 text-sm font-medium">
+            <ul className="content-max flex flex-col gap-1 py-3">
               {sectionLinks.map((link) => (
                 <li key={link.href}>
                   <DisclosureButton
                     as="a"
                     href={link.href}
-                    className="block rounded-md px-2 py-2 text-[var(--color-text-default)]/80 hover:bg-[var(--color-surface)] hover:text-[var(--color-primary)]"
+                    className={buttonClasses(
+                      "raw",
+                      "standard",
+                      "w-full justify-start text-[var(--color-text-default)]/80 hover:text-[var(--color-primary)]"
+                    )}
                   >
                     {link.label}
                   </DisclosureButton>
@@ -109,7 +121,7 @@ export function HomeNav() {
                 <DisclosureButton
                   as={Link}
                   to="/portal"
-                  className={buttonClasses("primary", "md", "w-full")}
+                  className={buttonClasses("primary", "standard", "w-full")}
                 >
                   Adopt
                 </DisclosureButton>
