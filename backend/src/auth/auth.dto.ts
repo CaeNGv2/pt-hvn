@@ -23,3 +23,9 @@ export class AdminLoginDto {
   @IsNotEmpty()
   password!: string;
 }
+
+/** Response returned by both login endpoints. */
+export class AuthTokenResponse {
+  @ApiProperty({ description: 'Signed JWT access token' })
+  accessToken!: string;
+}

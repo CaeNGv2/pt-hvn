@@ -35,8 +35,8 @@ export default function AdminLoginPage() {
       login(token);
       showToast({ title: "Signed in as admin", tone: "success" });
       navigate(from, { replace: true });
-    } catch {
-      setError("Invalid admin credentials.");
+    } catch (e) {
+      setError("Invalid admin credentials." + JSON.stringify(e));
     } finally {
       setSubmitting(false);
     }

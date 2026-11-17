@@ -106,7 +106,7 @@ export default function MemberRegisterPage() {
             className={authInputClass}
           />
           <span className="text-xs text-[var(--color-text-default)]/50">
-            At least 6 characters.
+            At least 4 characters.
           </span>
         </label>
 

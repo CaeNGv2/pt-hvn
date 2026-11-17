@@ -1,8 +1,7 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service.js';
-import { AdminLoginDto, MemberLoginDto } from './auth.dto.js';
-
+import { AdminLoginDto, MemberLoginDto, AuthTokenResponse } from './auth.dto.js';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -13,7 +12,9 @@ export class AuthController {
   @Post('member/login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Member login – returns JWT' })
-  memberLogin(@Body() dto: MemberLoginDto) {
+  @ApiOkResponse({ type: AuthTokenResponse })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  memberLogin(@Body() dto: MemberLoginDto): Promise<AuthTokenResponse> {
     return this.authService.loginMember(dto.email, dto.password);
   }
 
@@ -21,7 +22,9 @@ export class AuthController {
   @Post('admin/login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Admin login – returns JWT' })
-  adminLogin(@Body() dto: AdminLoginDto) {
+  @ApiOkResponse({ type: AuthTokenResponse })
+  @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
+  adminLogin(@Body() dto: AdminLoginDto): Promise<AuthTokenResponse> {
     return this.authService.loginAdmin(dto.username, dto.password);
   }
 }

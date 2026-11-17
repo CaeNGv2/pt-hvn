@@ -20,6 +20,11 @@ export interface MemberLoginDto {
   password: string;
 }
 
+export interface AuthTokenResponse {
+  /** Signed JWT access token */
+  accessToken: string;
+}
+
 export interface AdminLoginDto {
   /** @example "admin" */
   username: string;
@@ -587,11 +592,12 @@ export class Api<
       data: MemberLoginDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<AuthTokenResponse, void>({
         path: `/auth/member/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -607,11 +613,12 @@ export class Api<
       data: AdminLoginDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<AuthTokenResponse, void>({
         path: `/auth/admin/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };

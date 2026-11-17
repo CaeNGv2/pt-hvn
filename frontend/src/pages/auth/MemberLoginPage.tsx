@@ -35,8 +35,8 @@ export default function MemberLoginPage() {
       login(token);
       showToast({ title: "Welcome back!", tone: "success" });
       navigate(from, { replace: true });
-    } catch {
-      setError("Invalid email or password.");
+    } catch (e) {
+      setError(`Invalid email or password. ${JSON.stringify(e)}`);
     } finally {
       setSubmitting(false);
     }
