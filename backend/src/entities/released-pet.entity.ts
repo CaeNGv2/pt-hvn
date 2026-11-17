@@ -3,11 +3,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
   CreateDateColumn,
   JoinColumn,
 } from 'typeorm';
 import { PetType } from './pet-type.entity.js';
 import { Member } from './member.entity.js';
+import { Tag } from './tag.entity.js';
 import { parsePhotoRef, serialisePhotoRef } from '../shared/photo-ref.js';
 import type { PhotoRef } from '../shared/photo-ref.js';
 
@@ -78,4 +81,12 @@ export class ReleasedPet {
 
   @Column({ type: 'text', nullable: true, name: 'admin_notes' })
   adminNotes: string | null;
+
+  @ManyToMany(() => Tag, { eager: true, cascade: false })
+  @JoinTable({
+    name: 'released_pet_tag',
+    joinColumn: { name: 'released_pet_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'tag_id', referencedColumnName: 'id' },
+  })
+  tags: Tag[];
 }

@@ -110,7 +110,7 @@ export function PortalSidebar({ nav }: PortalSidebarProps) {
       </nav>
 
       {/* Profile + theme toggle */}
-      <ProfileFooter />
+      <ProfileFooter scope={nav.scope} />
     </aside>
   );
 }

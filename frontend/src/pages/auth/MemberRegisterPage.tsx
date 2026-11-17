@@ -9,7 +9,7 @@ import { AuthShell, authInputClass } from "./AuthShell";
 
 /** Member registration page. Registers, then signs the new member straight in. */
 export default function MemberRegisterPage() {
-  const { login } = useAuth();
+  const { loginMember } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ export default function MemberRegisterPage() {
       // Register doesn't return a token — log in to obtain one.
       const res = await api.auth.authControllerMemberLogin({ email, password });
       const token = (res.data as { accessToken?: string } | undefined)?.accessToken;
-      if (token) login(token);
+      if (token) loginMember(token);
 
       showToast({
         title: "Account created",

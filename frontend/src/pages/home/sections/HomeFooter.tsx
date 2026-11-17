@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 import { Logo } from "@/components/Logo";
 
@@ -20,9 +21,9 @@ const columns: FooterColumn[] = [
   {
     heading: "About",
     links: [
-      { label: "Our story", href: "#who-we-are" },
-      { label: "Our impact", href: "#impact" },
-      { label: "Stories", href: "#stories" },
+      { label: "Our story", href: "/#who-we-are" },
+      { label: "Our impact", href: "/#impact" },
+      { label: "Stories", href: "/#stories" },
       { label: "Careers", href: "#" },
     ],
   },
@@ -35,6 +36,13 @@ const columns: FooterColumn[] = [
       { label: "Terms of service", href: "#" },
     ],
   },
+  {
+    heading: "Portal",
+    links: [
+      { label: "Portal", href: "/portal" },
+      { label: "Staff Login", href: "/admin" }
+    ],
+  },
 ];
 
 // Computed once at module load — avoids an impure call during render.
@@ -44,7 +52,7 @@ const currentYear = new Date().getFullYear();
 export function HomeFooter() {
   return (
     <footer className="mt-4 bg-[var(--color-container)]">
-      <div className="content-max grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+      <div className="content-max grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-3">
           <Logo onSurfaceType="light" />
           <p className="max-w-xs text-sm text-[var(--color-text-default)]/70">
@@ -61,21 +69,7 @@ export function HomeFooter() {
             <ul className="flex flex-col gap-2 text-sm">
               {col.links.map((link) => (
                 <li key={link.label}>
-                  {link.href.startsWith("/") ? (
-                    <Link
-                      to={link.href}
-                      className="text-[var(--color-text-default)]/70 transition-colors hover:text-[var(--color-primary)]"
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={link.href}
-                      className="text-[var(--color-text-default)]/70 transition-colors hover:text-[var(--color-primary)]"
-                    >
-                      {link.label}
-                    </a>
-                  )}
+                  <FooterLink href={link.href}>{link.label}</FooterLink>
                 </li>
               ))}
             </ul>
@@ -87,5 +81,28 @@ export function HomeFooter() {
         © {currentYear} Pet Heaven Society. All rights reserved.
       </div>
     </footer>
+  );
+}
+
+const footerLinkClass =
+  "text-[var(--color-text-default)]/70 transition-colors hover:text-[var(--color-primary)]";
+
+/** Routes footer hrefs to the right link type: in-page (#), route (/), or no-op. */
+function FooterLink({ href, children }: { href: string; children: string }) {
+  if (href.includes("#")) {
+    return href === "#" ? (
+      <a href={href} className={footerLinkClass}>
+        {children}
+      </a>
+    ) : (
+      <HashLink smooth to={href} className={footerLinkClass}>
+        {children}
+      </HashLink>
+    );
+  }
+  return (
+    <Link to={href} className={footerLinkClass}>
+      {children}
+    </Link>
   );
 }

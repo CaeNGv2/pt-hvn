@@ -166,6 +166,7 @@ export interface SubmitReleaseDto {
   summaryDesc?: string;
   petDesc?: string;
   reasonDesc?: string;
+  tagIds?: number[];
 }
 
 export interface Member {
@@ -198,6 +199,7 @@ export interface ReleasedPet {
   /** @format date-time */
   reviewedAt: string | null;
   adminNotes: string | null;
+  tags: Tag[];
 }
 
 export interface ReviewReleaseDto {

@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 import dogImg from "@/assets/dog_newsletter.webp";
 import { buttonClasses } from "@/components/ui";
-
-
-// Stacking is kept within this section's own context using non-negative
 
 export function HomeHero() {
   return (
@@ -52,8 +50,9 @@ export function HomeHero() {
             >
               Adopt or release
             </Link>
-            <a
-              href="#how-to-help"
+            <HashLink
+              smooth
+              to="/#how-to-help"
               className={buttonClasses(
                 "less",
                 "bigger",
@@ -61,7 +60,7 @@ export function HomeHero() {
               )}
             >
               How you can help
-            </a>
+            </HashLink>
           </div>
         </div>
       </div>

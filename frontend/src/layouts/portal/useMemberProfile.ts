@@ -15,12 +15,12 @@ export interface MemberProfile {
  * loading or for guests.
  */
 export function useMemberProfile() {
-  const { isAuthenticated } = useAuth();
+  const { isMemberAuthenticated } = useAuth();
   const [profile, setProfile] = useState<MemberProfile | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isMemberAuthenticated) {
       setProfile(null);
       return;
     }
@@ -40,7 +40,7 @@ export function useMemberProfile() {
     return () => {
       active = false;
     };
-  }, [isAuthenticated]);
+  }, [isMemberAuthenticated]);
 
   return { profile, loading };
 }

@@ -1,2 +1,2 @@
-export { api, getAuthToken, setAuthToken } from "@/api/client";
+export { api, getAuthToken, setAuthToken, type AuthScope } from "@/api/client";
 export * from "@/api/generated/api";

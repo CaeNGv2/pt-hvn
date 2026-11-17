@@ -13,7 +13,7 @@ interface LocationState {
 
 /** Member login page. */
 export default function MemberLoginPage() {
-  const { login } = useAuth();
+  const { loginMember } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +32,7 @@ export default function MemberLoginPage() {
       const res = await api.auth.authControllerMemberLogin({ email, password });
       const token = (res.data as { accessToken?: string } | undefined)?.accessToken;
       if (!token) throw new Error("No token returned");
-      login(token);
+      loginMember(token);
       showToast({ title: "Welcome back!", tone: "success" });
       navigate(from, { replace: true });
     } catch (e) {

@@ -5,6 +5,7 @@ import {
   IsInt,
   IsNumber,
   IsIn,
+  IsArray,
   Min,
   Max,
   MaxLength,
@@ -71,6 +72,12 @@ export class SubmitReleaseDto {
   @IsOptional()
   @IsString()
   reasonDesc?: string;
+
+  @ApiPropertyOptional({ type: [Number] })
+  @IsOptional()
+  @IsArray()
+  @IsInt({ each: true })
+  tagIds?: number[];
 }
 
 export class ReviewReleaseDto {

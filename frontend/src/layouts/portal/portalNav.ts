@@ -32,6 +32,8 @@ export interface NavCategory {
  * its own, so the shared layout/sidebar renders the right content.
  */
 export interface SidebarNav {
+  /** Which auth session this area belongs to. */
+  scope: "member" | "admin";
   /** The fixed "home" link of this area, shown above the categorised list. */
   dashboardLink: NavLinkItem;
   categories: NavCategory[];
@@ -39,6 +41,7 @@ export interface SidebarNav {
 
 /** Member portal navigation. */
 export const portalSidebarNav: SidebarNav = {
+  scope: "member",
   dashboardLink: { label: "Dashboard", to: "/portal", icon: HomeModernIcon },
   categories: [
     {
@@ -49,7 +52,6 @@ export const portalSidebarNav: SidebarNav = {
           label: "My applications",
           to: "/portal/adoptions",
           icon: HeartIcon,
-          disabled: true,
         },
       ],
     },
@@ -60,13 +62,11 @@ export const portalSidebarNav: SidebarNav = {
           label: "Surrender a pet",
           to: "/portal/releases/new",
           icon: PaperAirplaneIcon,
-          disabled: true,
         },
         {
           label: "My surrenders",
           to: "/portal/releases",
           icon: InboxArrowDownIcon,
-          disabled: true,
         },
       ],
     },
@@ -90,8 +90,9 @@ export const portalSidebarNav: SidebarNav = {
   ],
 };
 
-/** Admin navigation (placeholder destinations until those pages are built). */
+/** Admin navigation. */
 export const adminSidebarNav: SidebarNav = {
+  scope: "admin",
   dashboardLink: { label: "Overview", to: "/admin", icon: Squares2X2Icon },
   categories: [
     {
@@ -114,18 +115,8 @@ export const adminSidebarNav: SidebarNav = {
     {
       heading: "Requests",
       items: [
-        {
-          label: "Adoptions",
-          to: "/admin/adoptions",
-          icon: HeartIcon,
-          disabled: true,
-        },
-        {
-          label: "Surrenders",
-          to: "/admin/releases",
-          icon: InboxArrowDownIcon,
-          disabled: true,
-        },
+        { label: "Adoptions", to: "/admin/adoptions", icon: HeartIcon },
+        { label: "Surrenders", to: "/admin/releases", icon: InboxArrowDownIcon },
       ],
     },
     {

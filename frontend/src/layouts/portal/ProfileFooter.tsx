@@ -7,26 +7,44 @@ import { useAuth } from "@/hooks";
 import { ThemeToggle } from "./ThemeToggle";
 import { useMemberProfile } from "./useMemberProfile";
 
+interface ProfileFooterProps {
+  /** Which session this sidebar represents. */
+  scope: "member" | "admin";
+}
+
 /**
- * Sidebar footer: profile name/info (or a guest state with a login button),
- * a logout action when signed in, and the theme toggle alongside.
+ * Sidebar footer: profile info for the given scope, a scope-specific logout /
+ * login action, and the theme toggle. Member and admin sessions are separate.
  */
-export function ProfileFooter() {
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+export function ProfileFooter({ scope }: ProfileFooterProps) {
+  const {
+    isMemberAuthenticated,
+    logoutMember,
+    isAdmin,
+    logoutAdmin,
+  } = useAuth();
   const { profile } = useMemberProfile();
   const navigate = useNavigate();
 
+  const isAdminScope = scope === "admin";
+  const authed = isAdminScope ? isAdmin : isMemberAuthenticated;
+
   function handleLogout() {
-    logout();
-    navigate("/");
+    if (isAdminScope) {
+      logoutAdmin();
+      navigate("/admin/login");
+    } else {
+      logoutMember();
+      navigate("/");
+    }
   }
 
-  const name = isAdmin
+  const name = isAdminScope
     ? "Administrator"
-    : profile?.fullName ?? (isAuthenticated ? "Member" : "Guest");
-  const subtitle = isAdmin
+    : profile?.fullName ?? (authed ? "Member" : "Guest");
+  const subtitle = isAdminScope
     ? "Admin access"
-    : isAuthenticated
+    : authed
       ? profile?.email ?? "Signed in"
       : "Not signed in";
 
@@ -43,7 +61,7 @@ export function ProfileFooter() {
         <ThemeToggle />
       </div>
 
-      {isAuthenticated ? (
+      {authed ? (
         <button
           type="button"
           onClick={handleLogout}
@@ -54,7 +72,7 @@ export function ProfileFooter() {
         </button>
       ) : (
         <Link
-          to="/portal/login"
+          to={isAdminScope ? "/admin/login" : "/portal/login"}
           className={buttonClasses("primary", "standard", "mt-3 w-full")}
         >
           Log in

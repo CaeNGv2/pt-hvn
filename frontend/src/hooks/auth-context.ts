@@ -1,24 +1,25 @@
 import { createContext, useContext } from "react";
 
-import type { UserRole } from "@/lib/jwt";
-
 export interface AuthContextValue {
-  token: string | null;
-  isAuthenticated: boolean;
-  /** Role decoded from the JWT ("member" | "admin"), or null for guests. */
-  role: UserRole | null;
+  /** Member session */
+  memberToken: string | null;
+  isMemberAuthenticated: boolean;
+  loginMember: (token: string) => void;
+  logoutMember: () => void;
+
+  /** Admin session (kept entirely separate from the member session) */
+  adminToken: string | null;
   isAdmin: boolean;
-  /** Persist a freshly issued JWT. */
-  login: (token: string) => void;
-  /** Clear the stored JWT. */
-  logout: () => void;
+  loginAdmin: (token: string) => void;
+  logoutAdmin: () => void;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
 
 /**
  * Usage:
- *   const { isAuthenticated, isAdmin, login, logout } = useAuth();
+ *   const { isMemberAuthenticated, loginMember } = useAuth(); // portal
+ *   const { isAdmin, loginAdmin } = useAuth();                 // admin
  */
 export function useAuth(): AuthContextValue {
   const ctx = useContext(AuthContext);

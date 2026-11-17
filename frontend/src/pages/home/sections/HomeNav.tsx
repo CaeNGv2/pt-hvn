@@ -9,16 +9,17 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 import { Logo } from "@/components/Logo";
 import { buttonClasses } from "@/components/ui";
 
-/** In-page section anchors (smooth-scroll via `scroll-behavior` in theme.css). */
+/** In-page section anchors. HashLink resolves these correctly under HashRouter. */
 const sectionLinks = [
-  { label: "Who we are", href: "#who-we-are" },
-  { label: "How to help", href: "#how-to-help" },
-  { label: "Our impact", href: "#impact" },
-  { label: "Stories", href: "#stories" },
+  { label: "Who we are", href: "/#who-we-are" },
+  { label: "How to help", href: "/#how-to-help" },
+  { label: "Our impact", href: "/#impact" },
+  { label: "Stories", href: "/#stories" },
 ];
 
 
@@ -63,8 +64,9 @@ export function HomeNav() {
             <ul className="hidden items-center gap-1 md:flex">
               {sectionLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
+                  <HashLink
+                    smooth
+                    to={link.href}
                     className={buttonClasses(
                       "raw",
                       "standard",
@@ -72,7 +74,7 @@ export function HomeNav() {
                     )}
                   >
                     {link.label}
-                  </a>
+                  </HashLink>
                 </li>
               ))}
             </ul>
@@ -105,8 +107,9 @@ export function HomeNav() {
               {sectionLinks.map((link) => (
                 <li key={link.href}>
                   <DisclosureButton
-                    as="a"
-                    href={link.href}
+                    as={HashLink}
+                    smooth
+                    to={link.href}
                     className={buttonClasses(
                       "raw",
                       "standard",

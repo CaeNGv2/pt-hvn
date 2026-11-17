@@ -13,7 +13,7 @@ interface LocationState {
 
 /** Admin login page (separate credentials from members). */
 export default function AdminLoginPage() {
-  const { login } = useAuth();
+  const { loginAdmin } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
       const res = await api.auth.authControllerAdminLogin({ username, password });
       const token = (res.data as { accessToken?: string } | undefined)?.accessToken;
       if (!token) throw new Error("No token returned");
-      login(token);
+      loginAdmin(token);
       showToast({ title: "Signed in as admin", tone: "success" });
       navigate(from, { replace: true });
     } catch (e) {

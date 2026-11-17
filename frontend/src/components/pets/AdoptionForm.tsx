@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 
 import { api } from "@/api";
+import { Field, fieldInputClass } from "@/components/forms";
 import { Button, buttonClasses } from "@/components/ui";
 import { useToast } from "@/components/toast";
 import { useAuth } from "@/hooks";
@@ -25,7 +26,7 @@ export function AdoptionForm({
   onSubmitted,
   onCancel,
 }: AdoptionFormProps) {
-  const { isAuthenticated } = useAuth();
+  const { isMemberAuthenticated } = useAuth();
   const { showToast } = useToast();
 
   const [livingSituation, setLivingSituation] = useState("");
@@ -33,7 +34,7 @@ export function AdoptionForm({
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  if (!isAuthenticated) {
+  if (!isMemberAuthenticated) {
     return (
       <div className="rounded-lg border border-[var(--color-outline)] bg-[var(--color-container)] p-5 text-sm">
         <p className="text-[var(--color-text-default)]/80">
@@ -92,7 +93,7 @@ export function AdoptionForm({
           maxLength={256}
           value={livingSituation}
           onChange={(e) => setLivingSituation(e.target.value)}
-          className={inputClass}
+          className={fieldInputClass}
         />
       </Field>
 
@@ -101,7 +102,7 @@ export function AdoptionForm({
           rows={3}
           value={experienceDesc}
           onChange={(e) => setExperienceDesc(e.target.value)}
-          className={inputClass}
+          className={fieldInputClass}
         />
       </Field>
 
@@ -110,7 +111,7 @@ export function AdoptionForm({
           rows={3}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className={inputClass}
+          className={fieldInputClass}
         />
       </Field>
 
@@ -128,23 +129,4 @@ export function AdoptionForm({
   );
 }
 
-const inputClass =
-  "w-full rounded-md border border-[var(--color-outline)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]";
 
-function Field({
-  label,
-  hint,
-  children,
-}: {
-  label: string;
-  hint?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-sm font-medium">{label}</span>
-      {hint && <span className="text-xs text-[var(--color-text-default)]/50">{hint}</span>}
-      {children}
-    </label>
-  );
-}
