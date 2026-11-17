@@ -25,15 +25,15 @@ export function PetCardView({ data }: { data: PetCardViewData }) {
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-surface)]">
-      <div className="relative aspect-[4/3] bg-[var(--color-container)]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[var(--color-container)]">
         {data.photoUrl ? (
           <img
             src={data.photoUrl}
             alt={data.name || "Pet"}
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-[var(--color-text-default)]/30">
+          <div className="absolute inset-0 flex items-center justify-center text-[var(--color-text-default)]/30">
             <PhotoIcon className="h-10 w-10" />
           </div>
         )}

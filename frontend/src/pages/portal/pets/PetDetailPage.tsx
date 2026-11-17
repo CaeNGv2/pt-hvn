@@ -61,17 +61,19 @@ export default function PetDetailPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        {/* Photo */}
-        <div className="overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-container)]">
-          <div className="aspect-[4/3]">
-            {photo ? (
-              <img src={photo} alt={pet.name} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-[var(--color-text-default)]/30">
-                <PhotoIcon className="h-12 w-12" />
-              </div>
-            )}
-          </div>
+        {/* Photo — shown in full (uncropped). */}
+        <div className="flex items-center justify-center overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-container)]">
+          {photo ? (
+            <img
+              src={photo}
+              alt={pet.name}
+              className="max-h-[32rem] w-full object-contain"
+            />
+          ) : (
+            <div className="flex aspect-[4/3] w-full items-center justify-center text-[var(--color-text-default)]/30">
+              <PhotoIcon className="h-12 w-12" />
+            </div>
+          )}
         </div>
 
         {/* Info */}
