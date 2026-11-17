@@ -1,19 +1,24 @@
 import { BrowserRouter, HashRouter } from "react-router-dom";
 
-import { AuthProvider } from "@/hooks";
+import { ToastProvider } from "@/components/toast";
+import { AuthProvider, ThemeProvider } from "@/hooks";
 import AppRoutes from "@/AppRoutes";
 import { env } from "@/config/env";
 
-const isGitHubActions = env.pagesBasePath !== '/';
+const isGitHubActions = env.pagesBasePath !== "/";
 const Router = isGitHubActions ? HashRouter : BrowserRouter;
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </ToastProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

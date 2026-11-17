@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { PetType } from '../entities/pet-type.entity.js';
 import { Tag } from '../entities/tag.entity.js';
@@ -289,8 +289,10 @@ export class SeedService {
     private readonly petRepo: Repository<Pet>,
     @InjectRepository(Member)
     private readonly memberRepo: Repository<Member>,
+    private readonly dataSource: DataSource,
   ) {}
 
+  /** Seed only when the database is empty (used on first boot). */
   async seedIfFresh(): Promise<void> {
     const existingTypes = await this.typeRepo.count();
     if (existingTypes > 0) {
@@ -299,7 +301,47 @@ export class SeedService {
     }
 
     this.logger.log('Fresh database detected – seeding sample data…');
+    await this.seedData();
+  }
 
+  /**
+   * Force a full reset: truncate every table (members, pets, requests, …)
+   * and re-insert the static demo data. Destructive — intended for demos.
+   */
+  async resetToSeed(): Promise<void> {
+    this.logger.warn('Force-resetting database to seed data…');
+    await this.clearAll();
+    await this.seedData();
+    this.logger.warn('Database reset complete.');
+  }
+
+  /**
+   * Remove all rows. FK checks are disabled around the truncation so order
+   * doesn't matter and join tables are cleared too.
+   */
+  private async clearAll(): Promise<void> {
+    // Table names must match the @Entity() names used above.
+    const tables = [
+      'adoption_application',
+      'released_pet',
+      'pet_tag', // many-to-many join table
+      'pet',
+      'tag',
+      'pet_type',
+      'member',
+    ];
+    await this.dataSource.query('SET FOREIGN_KEY_CHECKS = 0');
+    try {
+      for (const table of tables) {
+        await this.dataSource.query(`TRUNCATE TABLE \`${table}\``);
+      }
+    } finally {
+      await this.dataSource.query('SET FOREIGN_KEY_CHECKS = 1');
+    }
+  }
+
+  /** Inserts the static demo dataset. Assumes tables are empty. */
+  private async seedData(): Promise<void> {
     // 1. Types
     const typeMap = new Map<string, PetType>();
     for (const name of PET_TYPES) {

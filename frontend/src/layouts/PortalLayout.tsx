@@ -1,67 +1,57 @@
-import type { ReactNode } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Outlet } from "react-router-dom";
 
-import { useTheme } from "@/hooks";
+import { Breadcrumbs } from "./portal/Breadcrumbs";
+import {
+  PortalHeaderContext,
+  type PortalHeader,
+} from "./portal/portal-header-context";
+import { PortalSidebar } from "./portal/PortalSidebar";
+import { portalSidebarNav, type SidebarNav } from "./portal/portalNav";
 
-export interface DashboardNavItem {
-  label: string;
-  to: string;
+const DEFAULT_HEADER: PortalHeader = {
+  title: "Dashboard",
+  breadcrumbs: [{ label: "Portal" }],
+};
+
+interface PortalLayoutProps {
+  /** Sidebar navigation for this area. Defaults to the member portal nav. */
+  nav?: SidebarNav;
 }
 
-interface DashboardLayoutProps {
-  /** Shown in the sidebar header, e.g. "Member" or "Admin". */
-  title?: string;
-  /** Sidebar navigation links. */
-  nav?: DashboardNavItem[];
-  /** Optional extra content in the top bar (e.g. user menu). */
-  actions?: ReactNode;
-}
-
-export default function PortalLayout({
-  title = "Dashboard",
-  nav = [],
-  actions,
-}: DashboardLayoutProps) {
-  const { theme, toggle } = useTheme();
+/**
+ * Portal shell: a fixed sidebar + a content area whose sticky header shows the
+ * current page title with a breadcrumb trail beneath it.
+ *
+ * `nav` lets different areas (member portal, admin) reuse this shell with their
+ * own sidebar content. Pages declare their title/breadcrumbs via
+ * `usePortalHeader(...)`.
+ */
+export default function PortalLayout({ nav = portalSidebarNav }: PortalLayoutProps) {
+  const [header, setHeader] = useState<PortalHeader>(DEFAULT_HEADER);
+  const ctx = useMemo(() => ({ header, setHeader }), [header]);
 
   return (
-    <div className="min-h-svh grid grid-cols-[240px_1fr] bg-[var(--color-surface-canvas)] text-[var(--color-text-default)]">
-      <aside className="flex flex-col gap-2 border-r border-[var(--color-outline)] bg-[var(--color-surface)] p-4">
-        <div className="mb-4 text-lg font-semibold">{title}</div>
-        <nav className="flex flex-col gap-1 text-sm">
-          {nav.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="rounded-md px-3 py-2 hover:bg-[var(--color-container)]"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </aside>
+    <PortalHeaderContext value={ctx}>
+      <div className="flex min-h-svh bg-[var(--color-surface-canvas)] text-[var(--color-text-default)]">
+        <div className="sticky top-0 h-svh shrink-0">
+          <PortalSidebar nav={nav} />
+        </div>
 
-      <div className="flex flex-col">
-        <header className="flex items-center justify-between border-b border-[var(--color-outline)] px-6 py-3">
-          <span className="text-sm opacity-70">Pet Heaven Society</span>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={toggle}
-              className="rounded-md px-2 py-1 text-sm hover:bg-[var(--color-container)]"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? "☀️" : "🌙"}
-            </button>
-            {actions}
-          </div>
-        </header>
+        <div className="flex min-w-0 flex-1 flex-col">
+          {/* Sticky header: page title + breadcrumb. */}
+          <header className="sticky top-0 z-20 border-b border-[var(--color-outline)] bg-[var(--color-surface-canvas)]/90 px-6 py-3 backdrop-blur">
+            <h1 className="text-lg font-semibold">{header.title}</h1>
+            <div className="mt-1">
+              <Breadcrumbs items={header.breadcrumbs} />
+            </div>
+          </header>
 
-        <main className="flex-1 p-6">
-          {/* Child routes render here. */}
-          <Outlet />
-        </main>
+          <main className="flex-1 p-6">
+            <Outlet />
+          </main>
+        </div>
       </div>
-    </div>
+    </PortalHeaderContext>
   );
 }

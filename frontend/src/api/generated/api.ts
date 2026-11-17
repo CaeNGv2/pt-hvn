@@ -1071,4 +1071,22 @@ export class Api<
         ...params,
       }),
   };
+  admin = {
+    /**
+     * No description
+     *
+     * @tags admin
+     * @name SeedControllerReset
+     * @summary [Admin] [DEMO] Force-reset the database back to seeded demo data
+     * @request POST:/admin/reset-database
+     * @secure
+     */
+    seedControllerReset: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/admin/reset-database`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+  };
 }

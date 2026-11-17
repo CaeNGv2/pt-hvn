@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   async loginAdmin(username: string, password: string): Promise<{ accessToken: string }> {
-    if (username !== ADMIN_USERNAME) throw new UnauthorizedException('Invalid credentials');
+    if (username !== ADMIN_USERNAME) throw new UnauthorizedException('Invalid asmcredentials');
     const valid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
     if (!valid) throw new UnauthorizedException('Invalid credentials');
 

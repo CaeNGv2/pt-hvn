@@ -1,5 +1,9 @@
 export { default as HomeLayout } from "./HomeLayout";
+export { default as PortalLayout } from "./PortalLayout";
+export { usePortalHeader } from "./portal/usePortalHeader";
+export type { Breadcrumb } from "./portal/portal-header-context";
 export {
-  default as DashboardLayout,
-  type DashboardNavItem,
-} from "./PortalLayout";
+  portalSidebarNav,
+  adminSidebarNav,
+  type SidebarNav,
+} from "./portal/portalNav";

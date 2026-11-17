@@ -10,11 +10,13 @@ import { PetsController } from "./pets/pets.controller.js";
 import { ReleasesController } from "./releases/releases.controller.js";
 import { AdoptionsController } from "./adoptions/adoptions.controller.js";
 import { UploadController } from "./upload/upload.controller.js";
+import { SeedController } from "./seed/seed.controller.js";
 import { AuthService } from "./auth/auth.service.js";
 import { MembersService } from "./members/members.service.js";
 import { PetsService } from "./pets/pets.service.js";
 import { ReleasesService } from "./releases/releases.service.js";
 import { AdoptionsService } from "./adoptions/adoptions.service.js";
+import { SeedService } from "./seed/seed.service.js";
 
 import { JwtAuthGuard } from "./auth/jwt-auth.guard.js";
 import { AdminAuthGuard } from "./auth/admin-auth.guard.js";
@@ -26,6 +28,7 @@ class StubMembersService {}
 class StubPetsService {}
 class StubReleasesService {}
 class StubAdoptionsService {}
+class StubSeedService {}
 
 /** Guard stub — always allows (spec gen never runs real HTTP requests) */
 class AllowAllGuard {
@@ -42,6 +45,7 @@ class AllowAllGuard {
     ReleasesController,
     AdoptionsController,
     UploadController,
+    SeedController,
   ],
   providers: [
     // Service stubs
@@ -50,6 +54,7 @@ class AllowAllGuard {
     { provide: PetsService, useClass: StubPetsService },
     { provide: ReleasesService, useClass: StubReleasesService },
     { provide: AdoptionsService, useClass: StubAdoptionsService },
+    { provide: SeedService, useClass: StubSeedService },
 
     // Guard stubs - override the global-ish guards used via @UseGuards()
     { provide: JwtAuthGuard, useClass: AllowAllGuard },

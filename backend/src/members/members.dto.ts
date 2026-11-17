@@ -22,7 +22,7 @@ export class RegisterMemberDto {
 
   @ApiProperty({ example: 'password1', minLength: 6 })
   @IsString()
-  @MinLength(6)
+  @MinLength(4)
   @MaxLength(256)
   password!: string;
 
