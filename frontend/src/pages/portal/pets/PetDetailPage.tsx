@@ -60,7 +60,7 @@ export default function PetDetailPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)]">
         {/* Photo — shown in full (uncropped). */}
         <div className="flex items-center justify-center overflow-hidden rounded-xl border border-[var(--color-outline)] bg-[var(--color-container)]">
           {photo ? (
