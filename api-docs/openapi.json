@@ -1,0 +1,1548 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/member/login": {
+      "post": {
+        "operationId": "AuthController_memberLogin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        },
+        "summary": "Member login – returns JWT",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/admin/login": {
+      "post": {
+        "operationId": "AuthController_adminLogin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        },
+        "summary": "Admin login – returns JWT",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/members/register": {
+      "post": {
+        "operationId": "MembersController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Register as a member / supporter",
+        "tags": [
+          "members"
+        ]
+      }
+    },
+    "/members/me": {
+      "get": {
+        "operationId": "MembersController_getMine",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get own member profile",
+        "tags": [
+          "members"
+        ]
+      }
+    },
+    "/members": {
+      "get": {
+        "operationId": "MembersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] List all members",
+        "tags": [
+          "members"
+        ]
+      }
+    },
+    "/members/{id}": {
+      "get": {
+        "operationId": "MembersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Get one member",
+        "tags": [
+          "members"
+        ]
+      }
+    },
+    "/pets": {
+      "get": {
+        "operationId": "PetsController_findAll",
+        "parameters": [
+          {
+            "name": "typeId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagIds",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated tag IDs",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Name substring search",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "available",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List pets (filterable by type, tags, name search)",
+        "tags": [
+          "pets"
+        ]
+      },
+      "post": {
+        "operationId": "PetsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Add a pet",
+        "tags": [
+          "pets"
+        ]
+      }
+    },
+    "/pets/types": {
+      "get": {
+        "operationId": "PetsController_findAllTypes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetType"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all pet types",
+        "tags": [
+          "pets"
+        ]
+      }
+    },
+    "/pets/tags": {
+      "get": {
+        "operationId": "PetsController_findAllTags",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all tags",
+        "tags": [
+          "pets"
+        ]
+      }
+    },
+    "/pets/{id}": {
+      "get": {
+        "operationId": "PetsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get one pet by ID",
+        "tags": [
+          "pets"
+        ]
+      },
+      "patch": {
+        "operationId": "PetsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Update a pet",
+        "tags": [
+          "pets"
+        ]
+      },
+      "delete": {
+        "operationId": "PetsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Delete a pet",
+        "tags": [
+          "pets"
+        ]
+      }
+    },
+    "/releases": {
+      "post": {
+        "operationId": "ReleasesController_submit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitReleaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleasedPet"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Submit a pet surrender form (member only)",
+        "tags": [
+          "releases"
+        ]
+      },
+      "get": {
+        "operationId": "ReleasesController_findAll",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "pending",
+                "accepted",
+                "rejected"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReleasedPet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] List all surrender requests",
+        "tags": [
+          "releases"
+        ]
+      }
+    },
+    "/releases/me": {
+      "get": {
+        "operationId": "ReleasesController_findMine",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReleasedPet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get own surrender submissions",
+        "tags": [
+          "releases"
+        ]
+      }
+    },
+    "/releases/{id}": {
+      "get": {
+        "operationId": "ReleasesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleasedPet"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Get one surrender request",
+        "tags": [
+          "releases"
+        ]
+      }
+    },
+    "/releases/{id}/review": {
+      "patch": {
+        "operationId": "ReleasesController_review",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewReleaseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReleasedPet"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Review a surrender request",
+        "tags": [
+          "releases"
+        ]
+      }
+    },
+    "/adoptions": {
+      "post": {
+        "operationId": "AdoptionsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdoptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionApplication"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Submit an adoption application (member only)",
+        "tags": [
+          "adoptions"
+        ]
+      },
+      "get": {
+        "operationId": "AdoptionsController_findAll",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdoptionApplication"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] List all adoption applications",
+        "tags": [
+          "adoptions"
+        ]
+      }
+    },
+    "/adoptions/me": {
+      "get": {
+        "operationId": "AdoptionsController_findMine",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdoptionApplication"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get own adoption applications",
+        "tags": [
+          "adoptions"
+        ]
+      }
+    },
+    "/adoptions/{id}": {
+      "get": {
+        "operationId": "AdoptionsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionApplication"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Get one adoption application",
+        "tags": [
+          "adoptions"
+        ]
+      }
+    },
+    "/adoptions/{id}/review": {
+      "patch": {
+        "operationId": "AdoptionsController_review",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewAdoptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdoptionApplication"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] Review an adoption application",
+        "tags": [
+          "adoptions"
+        ]
+      }
+    },
+    "/upload/image": {
+      "post": {
+        "description": "Returns `{ id, type: \"api\", path }`. Use returned `id` as `uri` in a PhotoRef `{ type: \"api\", uri: \"<id>\" }`.",
+        "operationId": "UploadController_uploadImage",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload an image and receive ID to the compressed WebP (member or admin)",
+        "tags": [
+          "upload"
+        ]
+      }
+    },
+    "/admin/reset-database": {
+      "post": {
+        "operationId": "SeedController_reset",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "[Admin] [DEMO] Force-reset the database back to seeded demo data",
+        "tags": [
+          "admin"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Pet Heaven Society API",
+    "description": "REST API for Pet Heaven Society — pet listings, member registration, adoption applications, and pet surrender forms.",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "MemberLoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "alice@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password1"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AuthTokenResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "Signed JWT access token"
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "AdminLoginDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "admin"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "RegisterMemberDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "maxLength": 128,
+            "example": "Alice Tan"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 256,
+            "format": "email",
+            "example": "alice@example.com"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6,
+            "maxLength": 256,
+            "example": "password1"
+          },
+          "phone": {
+            "type": "string",
+            "maxLength": 32,
+            "example": "+65 9123 0001"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fullName",
+          "email",
+          "password"
+        ]
+      },
+      "PetType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PetType"
+              }
+            ]
+          },
+          "breed": {
+            "type": "string",
+            "nullable": true
+          },
+          "ageYears": {
+            "type": "number",
+            "nullable": true
+          },
+          "gender": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "summaryDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoRef": {
+            "type": "string",
+            "nullable": true,
+            "description": "Stored as a JSON string: `{\"type\":\"api\"|\"external\"|\"site\",\"uri\":\"…\"}`.\nUse the `photo` getter/setter for typed access."
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "breed",
+          "ageYears",
+          "gender",
+          "summaryDesc",
+          "fullDesc",
+          "photoRef",
+          "isAvailable",
+          "createdAt",
+          "tags"
+        ]
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "pets"
+        ]
+      },
+      "PhotoRefDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "api",
+              "external",
+              "site"
+            ],
+            "type": "string"
+          },
+          "uri": {
+            "type": "string",
+            "maxLength": 512,
+            "description": "For \"api\": the upload image id. For \"external\": full URL. For \"site\": /public relative path."
+          }
+        },
+        "required": [
+          "type",
+          "uri"
+        ]
+      },
+      "CreatePetDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128,
+            "example": "Max"
+          },
+          "typeId": {
+            "type": "number",
+            "description": "Pet type id"
+          },
+          "breed": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "ageYears": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 999,
+            "example": 3
+          },
+          "gender": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "summaryDesc": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "fullDesc": {
+            "type": "string"
+          },
+          "photo": {
+            "$ref": "#/components/schemas/PhotoRefDto"
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdatePetDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "typeId": {
+            "type": "number"
+          },
+          "breed": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "ageYears": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "gender": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "summaryDesc": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "fullDesc": {
+            "type": "string"
+          },
+          "photo": {
+            "$ref": "#/components/schemas/PhotoRefDto"
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "SubmitReleaseDto": {
+        "type": "object",
+        "properties": {
+          "petName": {
+            "type": "string",
+            "maxLength": 128,
+            "example": "Buddy"
+          },
+          "petTypeId": {
+            "type": "number",
+            "description": "Pet type id"
+          },
+          "breed": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "ageYears": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "gender": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "photo": {
+            "$ref": "#/components/schemas/PhotoRefDto"
+          },
+          "summaryDesc": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "Short summary (max 128 chars)"
+          },
+          "petDesc": {
+            "type": "string"
+          },
+          "reasonDesc": {
+            "type": "string"
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "petName"
+        ]
+      },
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "passwordHash": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "fullName",
+          "email",
+          "passwordHash",
+          "phone",
+          "address",
+          "joinedAt",
+          "isActive"
+        ]
+      },
+      "ReleasedPet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "petName": {
+            "type": "string"
+          },
+          "petType": {
+            "nullable": true,
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PetType"
+              }
+            ]
+          },
+          "member": {
+            "$ref": "#/components/schemas/Member"
+          },
+          "breed": {
+            "type": "string",
+            "nullable": true
+          },
+          "ageYears": {
+            "type": "number",
+            "nullable": true
+          },
+          "gender": {
+            "enum": [
+              "male",
+              "female",
+              "unknown"
+            ],
+            "type": "string"
+          },
+          "photoRef": {
+            "type": "string",
+            "nullable": true
+          },
+          "summaryDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "petDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "reasonDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "type": "string"
+          },
+          "submittedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "reviewedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "adminNotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "petName",
+          "petType",
+          "member",
+          "breed",
+          "ageYears",
+          "gender",
+          "photoRef",
+          "summaryDesc",
+          "petDesc",
+          "reasonDesc",
+          "status",
+          "submittedAt",
+          "reviewedAt",
+          "adminNotes",
+          "tags"
+        ]
+      },
+      "ReviewReleaseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "type": "string"
+          },
+          "adminNotes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "CreateAdoptionDto": {
+        "type": "object",
+        "properties": {
+          "petId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Pet id to apply for"
+          },
+          "livingSituation": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "experienceDesc": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "petId"
+        ]
+      },
+      "AdoptionApplication": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "member": {
+            "$ref": "#/components/schemas/Member"
+          },
+          "pet": {
+            "$ref": "#/components/schemas/Pet"
+          },
+          "livingSituation": {
+            "type": "string",
+            "nullable": true
+          },
+          "experienceDesc": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "rejected",
+              "approved"
+            ],
+            "type": "string"
+          },
+          "submittedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "reviewedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "adminNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "member",
+          "pet",
+          "livingSituation",
+          "experienceDesc",
+          "message",
+          "status",
+          "submittedAt",
+          "reviewedAt",
+          "adminNotes"
+        ]
+      },
+      "ReviewAdoptionDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": [
+              "pending",
+              "approved",
+              "rejected"
+            ],
+            "type": "string"
+          },
+          "adminNotes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    }
+  }
+}
