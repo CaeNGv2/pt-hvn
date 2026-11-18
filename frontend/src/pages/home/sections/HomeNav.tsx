@@ -83,11 +83,7 @@ export function HomeNav() {
             <div className="flex flex-1 items-center justify-end gap-3 md:flex-none">
               <Link
                 to="/portal"
-                className={buttonClasses(
-                  "primary",
-                  "standard",
-                  "hidden md:inline-flex"
-                )}
+                className={buttonClasses("primary", "standard", "max-md:hidden")}
               >
                 Adopt Now
               </Link>
