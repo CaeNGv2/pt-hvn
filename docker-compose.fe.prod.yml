@@ -1,0 +1,18 @@
+services:
+  frontend:
+    networks:
+      traefik_net:
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.entrypoints=https"
+      - "traefik.http.routers.backend.rule=Host(`${FRONTEND_DOMAIN:?FRONTEND_DOMAIN not set}`)"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.service=backend"
+      - "traefik.http.services.backend.loadbalancer.server.port=3000"
+
+networks:
+  traefik_net:
+    name: traefik_net
+    external: true

@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    restart: on-failure:8
+    environment:
+      VITE_API_BASE_URL: ${FRONTEND_API_BASE_URL}
+      VITE_PAGES_BASE_PATH: ${FRONTEND_PAGES_BASE_PATH}

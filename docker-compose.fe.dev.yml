@@ -1,7 +1,4 @@
 services:
   frontend:
-    build:
-      context: ./frontend
-    restart: on-failure:8
     ports:
       - "3661:3000"
