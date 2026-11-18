@@ -4,18 +4,18 @@
   --color-surface-inverse: var(--color-text-dark);
   --color-container-lowest: var(--color-surface);
   --color-surface-inverse-lower: #4f4f4f;
-  --color-container-highest: #f4f4f4;
+  --color-container-highest: #ededdb;
   --color-secondary: #12415b;
   --color-text-dark: #1f1f1f; /* do not override */
   --color-accent-1: #93c56b; /* not to override */
   --color-outline: #d9d9d9;
   --color-text-light: #fafcfe; /* do not override */
-  --color-surface: #fbfbfb;
+  --color-surface: #fcfbe9;
   --color-text-inverse: var(--color-text-light);
   --color-primary: #ff4d94;
   --color-text-default: var(--color-text-dark);
-  --color-surface-canvas: #ffffff;
-  --color-container: #f1f1f1;
+  --color-surface-canvas: #f8f7e2;
+  --color-container: #f1f0d8;
 }
 
 [data-theme="dark"] {
@@ -39,9 +39,9 @@
   --color-text-default: #2a1a24; /* warm near-black for friendlier body text */
   --color-text-inverse: var(--color-text-light);
 
-  --color-surface-canvas: #fffdfe; /* page background, a hair warm/pink */
-  --color-surface: #ffffff;
-  --color-container: #fff0f6; /* soft pink card fill */
+  --color-surface-canvas: #fcfbe9; /* page background */
+  --color-surface: #fafaef;
+  --color-container: #fbfadc; /* soft pink card fill */
   --color-container-highest: #ffe3ef;
   --color-outline: #f6c9dd;
 
